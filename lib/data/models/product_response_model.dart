@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class ProductResponseModel {
@@ -111,6 +112,48 @@ class Product {
         "price": price,
         "imageProduct": imageProduct,
       };
+
+  @override
+  bool operator ==(covariant Product other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.type == type &&
+        other.model == model &&
+        other.brand == brand &&
+        other.range == range &&
+        other.powerMotor == powerMotor &&
+        other.battery == battery &&
+        other.wheelSize == wheelSize &&
+        other.wheelType == wheelType &&
+        other.maxLoad == maxLoad &&
+        other.topSpeed == topSpeed &&
+        other.waterproof == waterproof &&
+        other.weight == weight &&
+        other.bracketType == bracketType &&
+        other.price == price &&
+        other.imageProduct == imageProduct;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        type.hashCode ^
+        model.hashCode ^
+        brand.hashCode ^
+        range.hashCode ^
+        powerMotor.hashCode ^
+        battery.hashCode ^
+        wheelSize.hashCode ^
+        wheelType.hashCode ^
+        maxLoad.hashCode ^
+        topSpeed.hashCode ^
+        waterproof.hashCode ^
+        weight.hashCode ^
+        bracketType.hashCode ^
+        price.hashCode ^
+        imageProduct.hashCode;
+  }
 }
 
 class Links {

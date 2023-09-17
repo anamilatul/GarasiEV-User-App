@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_garasi_ev/presentation/account/account_page.dart';
-import 'package:flutter_garasi_ev/presentation/search/search_page.dart';
+// import 'package:flutter_garasi_ev/presentation/search/search_page.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
 // import 'package:google_nav_bar/google_nav_bar.dart';
 

@@ -6,6 +6,7 @@ import '../../../data/models/product_response_model.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
+import '../../cart/cart_page.dart';
 import 'cart_bottom_sheet.dart';
 
 class BottomCart extends StatefulWidget {
@@ -52,8 +53,8 @@ class _BottomCartState extends State<BottomCart> {
               child: Stack(children: [
                 GestureDetector(
                   onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const CartPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CartPage()));
                   },
                   child: const Icon(
                     Icons.shopping_cart_outlined,
@@ -74,11 +75,18 @@ class _BottomCartState extends State<BottomCart> {
                     ),
                     child: BlocBuilder<CheckoutBloc, CheckoutState>(
                       builder: (context, state) {
-                        return state.map(loaded: (value) {
+                        return state.map(loading: (value) {
+                          return const CircularProgressIndicator();
+                        }, loaded: (value) {
                           int totalQuantity = 0;
-                          for (var element in value.product) {
-                            totalQuantity += element.quantity;
-                          }
+                          value.product.forEach(
+                            (element) {
+                              totalQuantity += element.quantity;
+                            },
+                          );
+                          // for (var element in value.product) {
+                          //   totalQuantity += element.quantity;
+                          // }
                           return Text(
                             '$totalQuantity',
                             style: poppinsSemiBold.copyWith(

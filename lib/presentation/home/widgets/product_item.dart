@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_garasi_ev/utils/price_format.dart';
 import '../../../data/models/product_response_model.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
@@ -99,7 +100,7 @@ class ProductItem extends StatelessWidget {
                     ]),
 
                     Text(
-                      '${product.price}',
+                      '${product.price}'.priceFormat(),
                       style: poppinsSemiBold.copyWith(
                           color: ColorResources.primaryMaterial),
                     ),
