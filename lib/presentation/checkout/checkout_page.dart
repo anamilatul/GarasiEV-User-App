@@ -209,6 +209,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       deliveryAddress: _shoppingAddress.text,
                       sellerId: 3);
                   context.read<OrderBloc>().add(OrderEvent.order(requestModel));
+                  context.read<CheckoutBloc>().add(const CheckoutEvent.clear());
                 },
                 child: Container(
                   height: 60,

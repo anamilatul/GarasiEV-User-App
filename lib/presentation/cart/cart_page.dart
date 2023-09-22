@@ -31,18 +31,17 @@ class CartPageState extends State<CartPage> {
             onTap: () => Navigator.pop(context),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Icon(Icons.arrow_back_ios,
-                  color: Theme.of(context).cardColor, size: 20),
+              child: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
             ),
           ),
           const SizedBox(width: Dimensions.paddingSizeSmall),
           Text('Cart',
-              style: poppinsRegular.copyWith(
-                  fontSize: 20, color: Theme.of(context).cardColor)),
+              style:
+                  poppinsRegular.copyWith(fontSize: 20, color: Colors.black)),
         ]),
         automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 1,
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: [
@@ -57,9 +56,14 @@ class CartPageState extends State<CartPage> {
                       builder: (context, state) {
                         return state.maybeWhen(orElse: () {
                           return const Center(
-                            child: Text("Nothing data in cart"),
+                            child: Text("There is no data in the cart"),
                           );
                         }, loaded: (product) {
+                          if (product.isEmpty) {
+                            return const Center(
+                              child: Text("There is no data in the cart"),
+                            );
+                          }
                           return ListView.builder(
                             itemCount: product.length,
                             padding: const EdgeInsets.all(0),
@@ -132,32 +136,66 @@ class CartPageState extends State<CartPage> {
               ),
             ),
             Builder(
-              builder: (context) => InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const CheckoutPage();
-                  }));
+              builder: (context) => BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  return state.maybeWhen(orElse: () {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }, loaded: (product) {
+                    return product.isEmpty
+                        ? Container(
+                            width: MediaQuery.of(context).size.width / 3.5,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColorLight,
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.paddingSizeSmall),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: Dimensions.paddingSizeSmall,
+                                    vertical: Dimensions.fontSizeSmall),
+                                child: Text('Checkout',
+                                    style: poppinsSemiBold.copyWith(
+                                      fontSize: Dimensions.fontSizeDefault,
+                                      color: Colors.grey,
+                                    )),
+                              ),
+                            ),
+                          )
+                        : InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const CheckoutPage();
+                              }));
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 3.5,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.paddingSizeSmall),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: Dimensions.paddingSizeSmall,
+                                      vertical: Dimensions.fontSizeSmall),
+                                  child: Text(
+                                    'Checkout',
+                                    style: poppinsSemiBold.copyWith(
+                                      fontSize: Dimensions.fontSizeDefault,
+                                      color: Theme.of(context).cardColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                  });
                 },
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 3.5,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.paddingSizeSmall),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.paddingSizeSmall,
-                          vertical: Dimensions.fontSizeSmall),
-                      child: Text('Checkout',
-                          style: poppinsSemiBold.copyWith(
-                            fontSize: Dimensions.fontSizeDefault,
-                            color: Theme.of(context).cardColor,
-                          )),
-                    ),
-                  ),
-                ),
               ),
             ),
           ],

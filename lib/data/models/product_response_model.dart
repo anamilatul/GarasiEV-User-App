@@ -50,6 +50,7 @@ class Product {
   double? weight;
   String? bracketType;
   int? price;
+  double? rating;
   String? imageProduct;
 
   Product({
@@ -68,6 +69,7 @@ class Product {
     this.weight,
     this.bracketType,
     this.price,
+    this.rating,
     this.imageProduct,
   });
 
@@ -91,6 +93,7 @@ class Product {
         weight: json["Weight"]?.toDouble(),
         bracketType: json["bracketType"],
         price: json["price"],
+        rating: json["rating"]?.toDouble(),
         imageProduct: json["imageProduct"],
       );
 
@@ -110,6 +113,7 @@ class Product {
         "Weight": weight,
         "bracketType": bracketType,
         "price": price,
+        "rating": rating,
         "imageProduct": imageProduct,
       };
 
@@ -132,6 +136,7 @@ class Product {
         other.weight == weight &&
         other.bracketType == bracketType &&
         other.price == price &&
+        other.rating == rating &&
         other.imageProduct == imageProduct;
   }
 
@@ -152,6 +157,7 @@ class Product {
         weight.hashCode ^
         bracketType.hashCode ^
         price.hashCode ^
+        rating.hashCode ^
         imageProduct.hashCode;
   }
 }

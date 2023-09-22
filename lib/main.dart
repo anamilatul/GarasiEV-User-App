@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_garasi_ev/bloc/banner/banner_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/category/category_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/order/order_bloc.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CategoryBloc(),
+        ),
+        BlocProvider(
+          create: (context) => BannerBloc(),
         ),
         BlocProvider(
           create: (context) => CheckoutBloc(),

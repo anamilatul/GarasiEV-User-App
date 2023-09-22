@@ -33,5 +33,24 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         ]));
       }
     });
+    on<_RemoveProductInCart>((event, emit) {
+      final currentState = state as _Loaded;
+      if (currentState.product
+          .where((element) => element.product == event.product)
+          .isNotEmpty) {
+        var products = [...currentState.product];
+        products.removeWhere((element) => element.product == event.product);
+        final newState = products;
+        emit(const _Loading());
+        emit(_Loaded(newState));
+      } else {
+        emit(_Loaded([
+          ...currentState.product,
+        ]));
+      }
+    });
+    on<_Clear>((event, emit) {
+      emit(const _Loaded([]));
+    });
   }
 }

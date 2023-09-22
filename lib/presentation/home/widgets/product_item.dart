@@ -85,7 +85,7 @@ class ProductItem extends StatelessWidget {
                         style: poppinsRegular.copyWith(
                             fontSize: Dimensions.fontSizeSmall,
                             fontWeight: FontWeight.w400),
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis),
                     // const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -97,6 +97,14 @@ class ProductItem extends StatelessWidget {
                           style: poppinsRegular.copyWith(
                             fontSize: Dimensions.fontSizeSmall,
                           )),
+                      // RatingBar(
+                      //   rating: double.parse('${product.rating}'),
+                      //   size: 18,
+                      // ),
+                      // Text('${product.rating}',
+                      //     style: poppinsRegular.copyWith(
+                      //       fontSize: Dimensions.fontSizeSmall,
+                      //     )),
                     ]),
 
                     Text(

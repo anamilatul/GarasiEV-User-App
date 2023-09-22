@@ -1,14 +1,17 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/category/category_bloc.dart';
 import 'package:flutter_garasi_ev/utils/costum_themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../bloc/checkout/checkout_bloc.dart';
 import '../../bloc/product/product_bloc.dart';
 import '../../data/models/auth_response_model.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/images.dart';
+import '../cart/cart_page.dart';
+import 'widgets/banner.dart';
 import 'widgets/category_item.dart';
 import 'widgets/product_item.dart';
 
@@ -21,34 +24,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
-
-  static final List<String> imgSlider = [
-    'slide1.jpg',
-    'slide2.jpg',
-    'slide3.jpg',
-  ];
-  final CarouselSlider autoPlayImage = CarouselSlider(
-      items: imgSlider.map((fileImage) {
-        return Container(
-          margin: const EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            child: Image.asset(
-              'assets/images/$fileImage',
-              width: 10000,
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      }).toList(),
-      options: CarouselOptions(
-        viewportFraction: 1,
-        height: 210,
-        autoPlay: true,
-        enlargeCenterPage: true,
-        // aspectRatio: 2.0,
-      ));
-
   // bool singleVendor = false;
   @override
   void initState() {
@@ -106,14 +81,13 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 12.0),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const CartPage()),
+                        );
+                      },
                       icon: Stack(clipBehavior: Clip.none, children: [
-                        // Image.asset(
-                        //   Images.cartArrowDownImage,
-                        //   height: Dimensions.iconSizeDefault,
-                        //   width: Dimensions.iconSizeDefault,
-                        //   color: ColorResources.getPrimary(context),
-                        // ),
                         const Icon(
                           Icons.shopping_cart_outlined,
                           color: ColorResources.primaryMaterial,
@@ -125,12 +99,32 @@ class _HomePageState extends State<HomePage> {
                           child: CircleAvatar(
                             radius: 7,
                             backgroundColor: ColorResources.red,
-                            child: Text(
-                              '10',
-                              style: poppinsSemiBold.copyWith(
-                                color: ColorResources.white,
-                                fontSize: Dimensions.fontSizeExtraSmall,
-                              ),
+                            child: BlocBuilder<CheckoutBloc, CheckoutState>(
+                              builder: (context, state) {
+                                return state.maybeWhen(orElse: () {
+                                  return Text(
+                                    '10',
+                                    style: poppinsSemiBold.copyWith(
+                                      color: ColorResources.white,
+                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                    ),
+                                  );
+                                }, loaded: (product) {
+                                  int totalQuantity = 0;
+                                  product.forEach(
+                                    (element) {
+                                      totalQuantity += element.quantity;
+                                    },
+                                  );
+                                  return Text(
+                                    '$totalQuantity',
+                                    style: poppinsSemiBold.copyWith(
+                                      color: ColorResources.white,
+                                      fontSize: Dimensions.fontSizeExtraSmall,
+                                    ),
+                                  );
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -203,10 +197,7 @@ class _HomePageState extends State<HomePage> {
                       Dimensions.paddingSizeSmall),
                   child: Column(
                     children: [
-                      Container(
-                        child: autoPlayImage,
-                      ),
-                      // const BannerWidget(),
+                      const BannerWidget(),
                       const SizedBox(height: Dimensions.homePagePadding),
                       const Padding(
                         padding: EdgeInsets.symmetric(

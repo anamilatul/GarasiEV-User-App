@@ -9,30 +9,49 @@ class RatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // List<Widget> starList = [];
+
+    // int realNumber = rating.floor();
+    // int partNumber = ((rating - realNumber) * 10).ceil();
+
+    // for (int i = 1; i <= 5; i++) {
+    //   if (i < realNumber) {
+    //     starList.add(Icon(Icons.star, color: Colors.orange, size: size));
+    //   } else if (i == realNumber) {
+    //     starList.add(SizedBox(
+    //       height: size,
+    //       width: size,
+    //       child: Stack(
+    //         fit: StackFit.expand,
+    //         children: [
+    //           Icon(Icons.star, color: Colors.orange, size: size),
+    //           ClipRect(
+    //             clipper: _Clipper(part: partNumber),
+    //             child:
+    //                 Icon(Icons.star_border, color: Colors.orange, size: size),
+    //           )
+    //         ],
+    //       ),
+    //     ));
+    //   } else {
+    //     starList.add(Icon(Icons.star_border, color: Colors.orange, size: size));
+    //   }
+    // }
+
+    // return Row(
+    //   mainAxisSize: MainAxisSize.min,
+    //   children: starList,
+    // );
     List<Widget> starList = [];
 
-    int realNumber = rating.floor();
-    int partNumber = ((rating - realNumber) * 10).ceil();
+    int fullStars = rating.floor();
+    bool hasHalfStar = rating - fullStars >= 0.5;
 
     for (int i = 1; i <= 5; i++) {
-      if (i < realNumber) {
+      if (i <= fullStars) {
         starList.add(Icon(Icons.star, color: Colors.orange, size: size));
-      } else if (i == realNumber) {
-        starList.add(SizedBox(
-          height: size,
-          width: size,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Icon(Icons.star, color: Colors.orange, size: size),
-              ClipRect(
-                clipper: _Clipper(part: partNumber),
-                child:
-                    Icon(Icons.star_border, color: Colors.orange, size: size),
-              )
-            ],
-          ),
-        ));
+      } else if (hasHalfStar && i == fullStars + 1) {
+        starList.add(Icon(Icons.star_half, color: Colors.orange, size: size));
       } else {
         starList.add(Icon(Icons.star_border, color: Colors.orange, size: size));
       }
@@ -45,21 +64,21 @@ class RatingBar extends StatelessWidget {
   }
 }
 
-class _Clipper extends CustomClipper<Rect> {
-  final int part;
+// class _Clipper extends CustomClipper<Rect> {
+//   final int part;
 
-  _Clipper({required this.part});
+//   _Clipper({required this.part});
 
-  @override
-  Rect getClip(Size size) {
-    return Rect.fromLTRB(
-      (size.width / 10) * part,
-      0.0,
-      size.width,
-      size.height,
-    );
-  }
+//   @override
+//   Rect getClip(Size size) {
+//     return Rect.fromLTRB(
+//       (size.width / 10) * part,
+//       0.0,
+//       size.width,
+//       size.height,
+//     );
+//   }
 
-  @override
-  bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
-}
+//   @override
+//   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
+// }

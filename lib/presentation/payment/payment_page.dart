@@ -56,7 +56,10 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WebViewWidget(controller: _controller!),
+      // appBar: AppBar(
+      //   title: Text("Payment"),
+      // ),
+      body: SafeArea(child: WebViewWidget(controller: _controller!)),
     );
   }
 }
