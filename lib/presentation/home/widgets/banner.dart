@@ -28,7 +28,7 @@ class _BannerWidgetState extends State<BannerWidget> {
       children: [
         SizedBox(
           width: width,
-          height: width * 0.4,
+          height: width * 0.55,
           child: BlocBuilder<BannerBloc, BannerState>(
             builder: (context, state) {
               return state.maybeWhen(

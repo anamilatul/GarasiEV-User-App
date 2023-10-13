@@ -5,9 +5,8 @@ import '../../../data/models/category_response_model.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
-import '../../../utils/images.dart';
 
-class CategoryItem extends StatelessWidget {
+class CategoryItem extends StatefulWidget {
   final Category category;
   const CategoryItem({
     Key? key,
@@ -15,53 +14,57 @@ class CategoryItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CategoryItem> createState() => _CategoryItemState();
+}
+
+class _CategoryItemState extends State<CategoryItem> {
+  bool isClicked = false;
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
+        setState(() {
+          isClicked = !isClicked;
+        });
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CategoryProductsPage(
-                      id: category.id!,
-                      name: category.name!,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryProductsPage(
+              id: widget.category.id!,
+              name: widget.category.name!,
+            ),
+          ),
+        );
       },
-      child: Column(children: [
-        Container(
-          height: MediaQuery.of(context).size.width / 5,
-          width: MediaQuery.of(context).size.width / 5,
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: Theme.of(context).primaryColor.withOpacity(.2)),
-            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-            color: Theme.of(context).highlightColor,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: Dimensions.homePagePadding,
+          vertical: Dimensions.paddingSizeExtraSmall,
+        ),
+        height: 60,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color:
+              isClicked ? ColorResources.primaryMaterial : ColorResources.white,
+          border: Border.all(
+            color: isClicked
+                ? ColorResources.primaryMaterial
+                : ColorResources.black,
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-            child: FadeInImage.assetNetwork(
-              fit: BoxFit.cover,
-              placeholder: Images.placeholder,
-              image: 'https://picsum.photos/20${category.id}',
-              imageErrorBuilder: (c, o, s) => Image.asset(
-                Images.placeholder,
-                fit: BoxFit.cover,
-              ),
-            ),
+          borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraLarge),
+        ),
+        child: Text(
+          widget.category.name ?? '-',
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: isClicked ? ColorResources.white : ColorResources.black,
+            fontSize: Dimensions.fontSizeSmall,
           ),
         ),
-        const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-        Center(
-          child: Text(
-            category.name ?? '-',
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: poppinsRegular.copyWith(
-              fontSize: Dimensions.fontSizeSmall,
-            ),
-          ),
-        ),
-      ]),
+      ),
     );
   }
 }

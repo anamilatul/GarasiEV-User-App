@@ -29,6 +29,7 @@ class Data {
   final int totalPrice;
   final int paymentStatus;
   final String deliveryAddress;
+  final String orderStatus;
   final DateTime updatedAt;
   final DateTime createdAt;
   final int id;
@@ -42,6 +43,7 @@ class Data {
     required this.number,
     required this.totalPrice,
     required this.paymentStatus,
+    required this.orderStatus,
     required this.deliveryAddress,
     required this.updatedAt,
     required this.createdAt,
@@ -61,6 +63,7 @@ class Data {
         number: json["number"],
         totalPrice: json["total_price"],
         paymentStatus: json["payment_status"],
+        orderStatus: json["order_status"],
         deliveryAddress: json["delivery_address"],
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
@@ -77,6 +80,7 @@ class Data {
         "number": number,
         "total_price": totalPrice,
         "payment_status": paymentStatus,
+        "order_status": orderStatus,
         "delivery_address": deliveryAddress,
         "updated_at": updatedAt.toIso8601String(),
         "created_at": createdAt.toIso8601String(),

@@ -15,30 +15,25 @@ class TitleProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              Expanded(
-                  child: Text("${product.model ?? '-'} ${product.type ?? '-'}",
-                      style: poppinsRegular.copyWith(
-                          fontSize: Dimensions.fontSizeLarge),
-                      maxLines: 2)),
-              const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-              Column(
-                children: [
-                  Text(
-                    '${product.price!}'.priceFormat(),
-                    style: poppinsBold.copyWith(
-                        color: ColorResources.primaryMaterial,
-                        fontSize: Dimensions.fontSizeLarge),
-                  ),
-                ],
-              ),
-            ]),
-            const SizedBox(height: Dimensions.paddingSizeSmall),
-          ],
-        ));
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.paddingSizeDefault,
+          vertical: Dimensions.paddingSizeExtraSmall),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text("${product.model ?? '-'} ${product.type ?? '-'}",
+                style: poppinsBoldLarge.copyWith(
+                    fontSize: Dimensions.fontSizeExtraLarge),
+                maxLines: 2),
+          ),
+          const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+          Text(
+            '${product.price!}'.priceFormat(),
+            style: poppinsBold.copyWith(
+                color: ColorResources.red, fontSize: Dimensions.fontSizeLarge),
+          ),
+        ],
+      ),
+    );
   }
 }

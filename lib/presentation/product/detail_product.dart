@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_garasi_ev/utils/price_format.dart';
 import '../../data/models/product_response_model.dart';
+import '../../utils/color_resources.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
+import '../custom_widgets/rating_bar.dart';
 import 'widgets/bottom_cart.dart';
 import 'widgets/image_product.dart';
 import 'widgets/spesification_product.dart';
@@ -28,25 +31,6 @@ class _DetailProductState extends State<DetailProduct> {
         return true;
       },
       child: Scaffold(
-          appBar: AppBar(
-            title: Row(children: [
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(Icons.arrow_back_ios,
-                      color: Theme.of(context).cardColor, size: 20),
-                ),
-              ),
-              const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text('Product Detail',
-                  style: poppinsRegular.copyWith(
-                      fontSize: 20, color: Theme.of(context).cardColor)),
-            ]),
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
           body: RefreshIndicator(
             onRefresh: () async {},
             child: SingleChildScrollView(
@@ -74,17 +58,245 @@ class _DetailProductState extends State<DetailProduct> {
                           TitleProduct(
                             product: widget.product,
                           ),
+
                           Container(
-                            height: 250,
-                            margin: const EdgeInsets.only(
-                                top: Dimensions.paddingSizeSmall),
-                            padding: const EdgeInsets.all(
-                                Dimensions.paddingSizeSmall),
-                            child: SpesificationProduct(
-                                spesificationProduct:
-                                    widget.product.wheelType!),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.paddingSizeDefault),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Container(
+                                //   margin: EdgeInsets.symmetric(
+                                //       vertical: 5, horizontal: 10),
+                                //   child: Text(
+                                //     '${widget.product.price!}'.priceFormat(),
+                                //     style: poppinsBold.copyWith(
+                                //         color: ColorResources.primaryMaterial,
+                                //         fontSize: Dimensions.fontSizeLarge),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    RatingBar(
+                                      rating: double.parse(
+                                          '${widget.product.rating}'),
+                                      size: Dimensions.fontSizeLarge,
+                                    ),
+                                    SizedBox(width: 1),
+                                    Text('${widget.product.rating}',
+                                        style: poppinsRegular.copyWith(
+                                          fontSize: Dimensions.fontSizeLarge,
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Divider(
+                                  // indent: Dimensions.paddingSizeDefault,
+                                  // endIndent: Dimensions.paddingSizeDefault,
+                                  thickness: 2,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Detail Specification",
+                                    style: poppinsBold.copyWith(
+                                      fontSize: Dimensions.fontSizeLarge,
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Table(
+                                  border: TableBorder.all(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  children: [
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Power Motor'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.powerMotor}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Battery'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.battery}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Wheel Size'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.wheelSize}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Wheel Type'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.wheelType}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Max Load'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.maxLoad}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Top Speed'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.topSpeed}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Waterproof'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.waterproof}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Weight'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.weight}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
+                                            child: Text('Bracket Type'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.bracketType}'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(),
+
+                          // Container(
+                          //   height: MediaQuery.of(context).size.height,
+                          //   margin: const EdgeInsets.only(
+                          //       top: Dimensions.paddingSizeSmall),
+                          //   padding: const EdgeInsets.all(
+                          //       Dimensions.paddingSizeSmall),
+                          //   child: SpesificationProduct(
+                          //     spesificationProduct: widget.product.wheelType!,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

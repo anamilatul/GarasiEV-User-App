@@ -6,6 +6,7 @@ import 'package:flutter_garasi_ev/utils/color_resources.dart';
 
 import '../data/datasources/auth_local_datasource.dart';
 import 'home/home_page.dart';
+import 'search/search_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -19,7 +20,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    // SearchPage(),
+    SearchPage(),
     SizedBox(),
     AccountPage(),
   ];
@@ -55,7 +56,13 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.history,
+              Icons.search,
+            ),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.description_outlined,
             ),
             label: 'History',
           ),

@@ -31,7 +31,7 @@ class CartPageState extends State<CartPage> {
             onTap: () => Navigator.pop(context),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+              child: Icon(Icons.arrow_back, color: Colors.black, size: 20),
             ),
           ),
           const SizedBox(width: Dimensions.paddingSizeSmall),

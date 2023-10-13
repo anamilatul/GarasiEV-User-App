@@ -32,12 +32,14 @@ class _BottomCartState extends State<BottomCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      height: 70,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).highlightColor,
         borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
         boxShadow: [
           BoxShadow(
               color: Theme.of(context).hintColor,
@@ -45,79 +47,83 @@ class _BottomCartState extends State<BottomCart> {
               spreadRadius: .1)
         ],
       ),
-      child: Row(children: [
-        Expanded(
+      child: Row(
+        children: [
+          Expanded(
             flex: 3,
             child: Padding(
               padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-              child: Stack(children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const CartPage()));
-                  },
-                  child: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: ColorResources.primaryMaterial,
-                    size: 40,
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 15,
-                  child: Container(
-                    height: 17,
-                    width: 17,
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ColorResources.primaryMaterial,
-                    ),
-                    child: BlocBuilder<CheckoutBloc, CheckoutState>(
-                      builder: (context, state) {
-                        return state.map(loading: (value) {
-                          return const CircularProgressIndicator();
-                        }, loaded: (value) {
-                          int totalQuantity = 0;
-                          value.product.forEach(
-                            (element) {
-                              totalQuantity += element.quantity;
-                            },
-                          );
-                          // for (var element in value.product) {
-                          //   totalQuantity += element.quantity;
-                          // }
-                          return Text(
-                            '$totalQuantity',
-                            style: poppinsSemiBold.copyWith(
-                                fontSize: Dimensions.fontSizeExtraSmall,
-                                color: Theme.of(context).highlightColor),
-                          );
-                        });
-                      },
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const CartPage()));
+                    },
+                    child: const Icon(
+                      Icons.shopping_bag_outlined,
+                      color: ColorResources.black,
+                      size: 40,
                     ),
                   ),
-                )
-              ]),
-            )),
-        Expanded(
+                  Positioned(
+                    top: 0,
+                    right: 25,
+                    child: Container(
+                      height: 17,
+                      width: 17,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorResources.red,
+                      ),
+                      child: BlocBuilder<CheckoutBloc, CheckoutState>(
+                        builder: (context, state) {
+                          return state.map(loading: (value) {
+                            return const CircularProgressIndicator();
+                          }, loaded: (value) {
+                            int totalQuantity = 0;
+                            value.product.forEach(
+                              (element) {
+                                totalQuantity += element.quantity;
+                              },
+                            );
+                            // for (var element in value.product) {
+                            //   totalQuantity += element.quantity;
+                            // }
+                            return Text(
+                              '$totalQuantity',
+                              style: poppinsSemiBold.copyWith(
+                                  fontSize: Dimensions.fontSizeExtraSmall,
+                                  color: Theme.of(context).highlightColor),
+                            );
+                          });
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Expanded(
             flex: 11,
             child: InkWell(
               onTap: () {
                 if (vacationIsOn || temporaryClose) {
                 } else {
                   showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor:
-                          Theme.of(context).primaryColor.withOpacity(0),
-                      builder: (con) => CartBottomSheet(
-                            product: widget.product,
-                            callback: () {
-                              customSnackBar('Add to Cart', context,
-                                  isError: false);
-                            },
-                          ));
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(0),
+                    builder: (con) => CartBottomSheet(
+                      product: widget.product,
+                      callback: () {
+                        customSnackBar('Add to Cart', context, isError: false);
+                      },
+                    ),
+                  );
                 }
               },
               child: Container(
@@ -125,7 +131,7 @@ class _BottomCartState extends State<BottomCart> {
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(25),
                   color: ColorResources.primaryMaterial,
                 ),
                 child: Text(
@@ -135,8 +141,10 @@ class _BottomCartState extends State<BottomCart> {
                       color: Theme.of(context).highlightColor),
                 ),
               ),
-            )),
-      ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

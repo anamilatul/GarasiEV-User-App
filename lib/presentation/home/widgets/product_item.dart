@@ -21,17 +21,19 @@ class ProductItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailProduct(
-                      product: product,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailProduct(
+              product: product,
+            ),
+          ),
+        );
       },
       child: Container(
         height: Dimensions.cardHeight,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           color: Theme.of(context).highlightColor,
           boxShadow: [
             BoxShadow(
@@ -44,17 +46,17 @@ class ProductItem extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             // Product Image
             Container(
-              height: 150,
+              height: 140,
               decoration: BoxDecoration(
                 color: ColorResources.iconBg,
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder,
                   fit: BoxFit.cover,
@@ -73,47 +75,37 @@ class ProductItem extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: Dimensions.paddingSizeSmall,
                   bottom: 2,
-                  left: 5,
-                  right: 5),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("${product.model ?? '-'} ${product.type ?? '-'}",
-                        textAlign: TextAlign.center,
-                        style: poppinsRegular.copyWith(
-                            fontSize: Dimensions.fontSizeSmall,
-                            fontWeight: FontWeight.w400),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
-                    // const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      RatingBar(
-                        rating: double.parse('10.0'),
-                        size: 18,
-                      ),
-                      Text('(20)',
-                          style: poppinsRegular.copyWith(
-                            fontSize: Dimensions.fontSizeSmall,
-                          )),
-                      // RatingBar(
-                      //   rating: double.parse('${product.rating}'),
-                      //   size: 18,
-                      // ),
-                      // Text('${product.rating}',
-                      //     style: poppinsRegular.copyWith(
-                      //       fontSize: Dimensions.fontSizeSmall,
-                      //     )),
-                    ]),
-
-                    Text(
-                      '${product.price}'.priceFormat(),
-                      style: poppinsSemiBold.copyWith(
-                          color: ColorResources.primaryMaterial),
+                  left: 6,
+                  right: 6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("${product.model ?? '-'} ${product.type ?? '-'}",
+                      textAlign: TextAlign.center,
+                      style: poppinsRegular.copyWith(
+                          fontSize: Dimensions.fontSizeDefault,
+                          fontWeight: FontWeight.w700),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 2),
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    RatingBar(
+                      rating: double.parse('${product.rating}'),
+                      size: Dimensions.fontSizeSmall,
                     ),
-                  ],
-                ),
+                    SizedBox(width: 1),
+                    Text('${product.rating}',
+                        style: poppinsRegular.copyWith(
+                          fontSize: Dimensions.fontSizeSmall,
+                        )),
+                  ]),
+                  const SizedBox(height: 2),
+                  Text(
+                    '${product.price}'.priceFormat(),
+                    style: poppinsRegular.copyWith(color: ColorResources.red),
+                  ),
+                ],
               ),
             ),
           ]),

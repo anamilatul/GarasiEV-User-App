@@ -29,6 +29,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     context.read<ProductBloc>().add(const ProductEvent.getAll());
     context.read<CategoryBloc>().add(const CategoryEvent.getCategory());
+    // context.read<ProductBloc>().add(ProductEvent.getProductByCategory(4));
+    // context.read<ProductBloc>().add(
+    //       ProductEvent.getProductByCategory(5)
+    //     );
     super.initState();
     loadUserName();
   }
@@ -56,172 +60,168 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: ColorResources.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-          child: Stack(
-        children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                elevation: 0,
-                centerTitle: false,
-                expandedHeight: 50,
-                automaticallyImplyLeading: false,
-                backgroundColor: Theme.of(context).highlightColor,
-                // title: Text(
-                //   'Hai, $username',
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: 20,
-                //     fontWeight: FontWeight.w400,
-                //   ),
-                // ),
-                title: Image.asset(Images.logo, height: 35),
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => const CartPage()),
-                        );
-                      },
-                      icon: Stack(clipBehavior: Clip.none, children: [
-                        const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: ColorResources.primaryMaterial,
-                          size: 28,
-                        ),
-                        Positioned(
-                          top: -4,
-                          right: -4,
-                          child: CircleAvatar(
-                            radius: 7,
-                            backgroundColor: ColorResources.red,
-                            child: BlocBuilder<CheckoutBloc, CheckoutState>(
-                              builder: (context, state) {
-                                return state.maybeWhen(orElse: () {
-                                  return Text(
-                                    '10',
-                                    style: poppinsSemiBold.copyWith(
-                                      color: ColorResources.white,
-                                      fontSize: Dimensions.fontSizeExtraSmall,
-                                    ),
-                                  );
-                                }, loaded: (product) {
-                                  int totalQuantity = 0;
-                                  product.forEach(
-                                    (element) {
-                                      totalQuantity += element.quantity;
-                                    },
-                                  );
-                                  return Text(
-                                    '$totalQuantity',
-                                    style: poppinsSemiBold.copyWith(
-                                      color: ColorResources.white,
-                                      fontSize: Dimensions.fontSizeExtraSmall,
-                                    ),
-                                  );
-                                });
-                              },
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  elevation: 0,
+                  centerTitle: false,
+                  expandedHeight: 50,
+                  automaticallyImplyLeading: false,
+                  backgroundColor: Theme.of(context).highlightColor,
+                  // title: Text(
+                  //   'Hai, $username',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.w400,
+                  //   ),
+                  // ),
+                  title: Image.asset(Images.logo, height: 35),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => const CartPage()),
+                          );
+                        },
+                        icon: Stack(clipBehavior: Clip.none, children: [
+                          const Icon(
+                            Icons.shopping_bag_outlined,
+                            color: ColorResources.black,
+                            size: 28,
+                          ),
+                          Positioned(
+                            top: -4,
+                            right: -4,
+                            child: CircleAvatar(
+                              radius: 7,
+                              backgroundColor: ColorResources.red,
+                              child: BlocBuilder<CheckoutBloc, CheckoutState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(orElse: () {
+                                    return Text(
+                                      '10',
+                                      style: poppinsSemiBold.copyWith(
+                                        color: ColorResources.white,
+                                        fontSize: Dimensions.fontSizeExtraSmall,
+                                      ),
+                                    );
+                                  }, loaded: (product) {
+                                    int totalQuantity = 0;
+                                    product.forEach(
+                                      (element) {
+                                        totalQuantity += element.quantity;
+                                      },
+                                    );
+                                    return Text(
+                                      '$totalQuantity',
+                                      style: poppinsSemiBold.copyWith(
+                                        color: ColorResources.white,
+                                        fontSize: Dimensions.fontSizeExtraSmall,
+                                      ),
+                                    );
+                                  });
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
+                        ]),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverDelegate(
-                      child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.homePagePadding,
-                          vertical: Dimensions.paddingSizeSmall),
-                      color: ColorResources.white,
-                      alignment: Alignment.center,
+                  ],
+                ),
+                SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SliverDelegate(
+                        child: InkWell(
+                      onTap: () {},
                       child: Container(
-                        padding: const EdgeInsets.only(
-                          left: Dimensions.homePagePadding,
-                          right: Dimensions.paddingSizeExtraSmall,
-                          top: Dimensions.paddingSizeExtraSmall,
-                          bottom: Dimensions.paddingSizeExtraSmall,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: Dimensions.homePagePadding,
+                            vertical: Dimensions.paddingSizeSmall),
+                        color: ColorResources.white,
+                        alignment: Alignment.center,
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                            left: Dimensions.homePagePadding,
+                            right: Dimensions.paddingSizeExtraSmall,
+                            top: Dimensions.paddingSizeExtraSmall,
+                            bottom: Dimensions.paddingSizeExtraSmall,
+                          ),
+                          height: 60,
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 245, 245, 245),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey[200]!,
+                                  spreadRadius: 1,
+                                  blurRadius: 1)
+                            ],
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.paddingSizeExtraLarge),
+                          ),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Search',
+                                  style: poppinsRegular.copyWith(
+                                      color: Theme.of(context).hintColor),
+                                ),
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  // decoration: BoxDecoration(
+                                  //   color: Theme.of(context).primaryColor,
+                                  //   borderRadius: const BorderRadius.all(
+                                  //     Radius.circular(
+                                  //         Dimensions.paddingSizeExtraSmall),
+                                  //   ),
+                                  // ),
+                                  child: Icon(Icons.search,
+                                      color:
+                                          const Color.fromARGB(255, 45, 44, 44),
+                                      size: Dimensions.iconSizeDefault),
+                                ),
+                              ]),
                         ),
-                        height: 60,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey[200]!,
-                                spreadRadius: 1,
-                                blurRadius: 1)
-                          ],
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.paddingSizeExtraSmall),
-                        ),
-                        child: Row(
+                      ),
+                    ))),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                        Dimensions.homePagePadding,
+                        Dimensions.paddingSizeSmall,
+                        Dimensions.paddingSizeDefault,
+                        Dimensions.paddingSizeSmall),
+                    child: Column(
+                      children: [
+                        const BannerWidget(),
+                        const SizedBox(height: Dimensions.homePagePadding),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.paddingSizeExtraExtraSmall,
+                              vertical: Dimensions.paddingSizeExtraSmall),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Search',
-                                style: poppinsRegular.copyWith(
-                                    color: Theme.of(context).hintColor),
+                                "Categories",
+                                style: titleHeader,
                               ),
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(
-                                            Dimensions.paddingSizeExtraSmall))),
-                                child: Icon(Icons.search,
-                                    color: Theme.of(context).cardColor,
-                                    size: Dimensions.iconSizeSmall),
-                              ),
-                            ]),
-                      ),
-                    ),
-                  ))),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                      Dimensions.homePagePadding,
-                      Dimensions.paddingSizeSmall,
-                      Dimensions.paddingSizeDefault,
-                      Dimensions.paddingSizeSmall),
-                  child: Column(
-                    children: [
-                      const BannerWidget(),
-                      const SizedBox(height: Dimensions.homePagePadding),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.paddingSizeExtraExtraSmall,
-                            vertical: Dimensions.paddingSizeExtraSmall),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Categories",
-                              style: titleHeader,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                        // child: TitleRow(
-                        //   title: 'Categories',
-                        //   onTap: () {},
-                        // ),
-                      ),
-                      const SizedBox(height: Dimensions.paddingSizeSmall),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: Dimensions.homePagePadding),
-                        child: BlocBuilder<CategoryBloc, CategoryState>(
+                        const SizedBox(height: Dimensions.paddingSizeSmall),
+                        BlocBuilder<CategoryBloc, CategoryState>(
                           builder: (context, state) {
                             return state.maybeWhen(orElse: () {
                               return const Center(
@@ -231,19 +231,19 @@ class _HomePageState extends State<HomePage> {
                               final filteredData = model.data
                                       ?.where((item) =>
                                           item.name != "Newest" &&
-                                          item.name != "Best Seller")
+                                          item.name != "Best Seller" &&
+                                          item.name != "Recomendation")
                                       .toList() ??
                                   [];
 
                               return GridView.builder(
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4,
-                                  crossAxisSpacing: 15,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 10,
                                   mainAxisSpacing: 5,
-                                  childAspectRatio: (1 / 1.3),
+                                  childAspectRatio: 3,
                                 ),
-                                // itemCount: model.data!.length,
                                 itemCount: filteredData.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -274,94 +274,177 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                         ),
-                      ),
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        child: Row(children: [
-                          Expanded(child: Text('Products', style: titleHeader)),
-                        ]),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          child: Row(children: [
+                            Expanded(
+                                child: Text('Products', style: titleHeader)),
+                          ]),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              BlocBuilder<ProductBloc, ProductState>(
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    orElse: () {
-                      return SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        sliver: SliverGrid(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            mainAxisSpacing: 10.0,
-                            crossAxisSpacing: 10.0,
-                            childAspectRatio: 1.5 / 2,
+                // BlocBuilder<ProductBloc, ProductState>(
+                //   builder: (context, state) {
+                //     return state.maybeWhen(
+                //       orElse: () {
+                //         return SliverPadding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 16),
+                //           sliver: SliverGrid(
+                //             gridDelegate:
+                //                 const SliverGridDelegateWithFixedCrossAxisCount(
+                //               crossAxisCount: 1,
+                //               mainAxisSpacing: 10.0,
+                //               crossAxisSpacing: 10.0,
+                //               childAspectRatio: 1.5 / 2,
+                //             ),
+                //             delegate: SliverChildBuilderDelegate(
+                //               (BuildContext context, int index) {
+                //                 return const Center(
+                //                   child: CircularProgressIndicator(),
+                //                 );
+                //               },
+                //               childCount: 1,
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //       loaded: (model) {
+                //         final products = model.data!
+                //             .where((product) =>
+                //                 product.category?.name == "Recomendation")
+                //             .toList();
+
+                //         return SliverPadding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 16),
+                //           sliver: SliverGrid(
+                //             gridDelegate:
+                //                 const SliverGridDelegateWithFixedCrossAxisCount(
+                //               crossAxisCount: 2,
+                //               mainAxisSpacing: 10.0,
+                //               crossAxisSpacing: 10.0,
+                //               childAspectRatio: 1.5 / 2,
+                //             ),
+                //             delegate: SliverChildBuilderDelegate(
+                //               (BuildContext context, int index) {
+                //                 return ProductItem(
+                //                   product: products[
+                //                       index], // Menampilkan produk dengan categoryId 4
+                //                 );
+                //               },
+                //               childCount: products.length,
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //       error: (message) {
+                //         return SliverPadding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 16),
+                //           sliver: SliverGrid(
+                //             gridDelegate:
+                //                 const SliverGridDelegateWithFixedCrossAxisCount(
+                //               crossAxisCount: 1,
+                //               mainAxisSpacing: 10.0,
+                //               crossAxisSpacing: 10.0,
+                //               childAspectRatio: 1.5 / 2,
+                //             ),
+                //             delegate: SliverChildBuilderDelegate(
+                //               (BuildContext context, int index) {
+                //                 return Center(
+                //                   child: Text(message),
+                //                 );
+                //               },
+                //               childCount: 1,
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //     );
+                //   },
+                // ),
+
+                BlocBuilder<ProductBloc, ProductState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                      orElse: () {
+                        return SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 10.0,
+                              crossAxisSpacing: 10.0,
+                              childAspectRatio: 1.5 / 2,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                              childCount: 1,
+                            ),
                           ),
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                            childCount: 1,
+                        );
+                      },
+                      loaded: (model) {
+                        return SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10.0,
+                              crossAxisSpacing: 10.0,
+                              childAspectRatio: 1.5 / 2,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return ProductItem(
+                                  product: model.data![index],
+                                );
+                              },
+                              childCount: model.data!.length,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    loaded: (model) {
-                      return SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        sliver: SliverGrid(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10.0,
-                            crossAxisSpacing: 10.0,
-                            childAspectRatio: 1.5 / 2,
+                        );
+                      },
+                      error: (message) {
+                        return SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 10.0,
+                              crossAxisSpacing: 10.0,
+                              childAspectRatio: 1.5 / 2,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return Center(
+                                  child: Text(message),
+                                );
+                              },
+                              childCount: 1,
+                            ),
                           ),
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return ProductItem(
-                                product: model.data![index],
-                              );
-                            },
-                            childCount: model.data!.length,
-                          ),
-                        ),
-                      );
-                    },
-                    error: (message) {
-                      return SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        sliver: SliverGrid(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            mainAxisSpacing: 10.0,
-                            crossAxisSpacing: 10.0,
-                            childAspectRatio: 1.5 / 2,
-                          ),
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return Center(
-                                child: Text(message),
-                              );
-                            },
-                            childCount: 1,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
-      )),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

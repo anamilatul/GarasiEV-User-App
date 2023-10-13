@@ -22,7 +22,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final TextEditingController _shoppingAddress = TextEditingController();
   int subTotalPrice = 0;
   int totalPrice = 0;
-  int shippingCost = 25000;
+  int shippingCost = 0;
   List<Item> items = [];
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../bloc/product/product_bloc.dart';
 import '../../utils/color_resources.dart';
+import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
 import '../home/widgets/product_item.dart';
 
@@ -35,11 +36,22 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
     return Scaffold(
       backgroundColor: ColorResources.iconBg,
       appBar: AppBar(
-        // backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
-        title: Text('${widget.name}'),
+        title: Row(children: [
+          InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+            ),
+          ),
+          const SizedBox(width: Dimensions.paddingSizeSmall),
+          Text('${widget.name}',
+              style:
+                  poppinsRegular.copyWith(fontSize: 20, color: Colors.black)),
+        ]),
+        automaticallyImplyLeading: false,
+        elevation: 1,
+        backgroundColor: Colors.white,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,8 +62,10 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
             builder: (context, state) {
               return state.maybeWhen(
                 orElse: () {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
+                  return Expanded(
+                    child: const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
                   );
                 },
                 loaded: (model) {
@@ -61,6 +75,8 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                           horizontal: Dimensions.paddingSizeSmall),
                       physics: const BouncingScrollPhysics(),
                       crossAxisCount: 2,
+                      mainAxisSpacing: 6,
+                      crossAxisSpacing: 8,
                       itemCount: model.data!.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {

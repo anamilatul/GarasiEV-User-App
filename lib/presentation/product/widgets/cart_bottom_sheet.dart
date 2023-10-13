@@ -221,7 +221,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
     );
   }
 
-  void _navigateToNextScreen(BuildContext context) {}
+  // void _navigateToNextScreen(BuildContext context) {}
 }
 
 class QuantityButton extends StatelessWidget {
