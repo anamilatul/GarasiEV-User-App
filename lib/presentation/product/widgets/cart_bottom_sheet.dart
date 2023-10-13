@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_garasi_ev/presentation/checkout/checkout_page.dart';
 import 'package:flutter_garasi_ev/utils/price_format.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../bloc/checkout/checkout_bloc.dart';
@@ -9,6 +10,7 @@ import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
 import '../../../utils/images.dart';
 import '../../custom_widgets/button/custom_button.dart';
+import 'add_product_snackbar.dart';
 
 class CartBottomSheet extends StatefulWidget {
   final Function? callback; //biar quantity yg diatas cart muncul
@@ -37,11 +39,13 @@ class CartBottomSheetState extends State<CartBottomSheet> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+          padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
           decoration: BoxDecoration(
             color: Theme.of(context).highlightColor,
             borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,13 +81,15 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                              color: ColorResources.imageBg,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                  width: .5,
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(.20))),
+                            color: ColorResources.imageBg,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              width: .5,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(.20),
+                            ),
+                          ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: FadeInImage.assetNetwork(
@@ -107,110 +113,234 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                     overflow: TextOverflow.ellipsis),
                                 const SizedBox(
                                     height: Dimensions.paddingSizeSmall),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star,
-                                        color: Colors.orange),
-                                    Text(double.parse('5').toStringAsFixed(1),
-                                        style: poppinsSemiBold.copyWith(
-                                            fontSize: Dimensions.fontSizeLarge),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis),
-                                  ],
+                                // Row(
+                                //   children: [
+                                //     const Icon(Icons.star,
+                                //         color: Colors.orange),
+                                //     Text(double.parse('5').toStringAsFixed(1),
+                                //         style: poppinsSemiBold.copyWith(
+                                //             fontSize: Dimensions.fontSizeLarge),
+                                //         maxLines: 2,
+                                //         overflow: TextOverflow.ellipsis),
+                                //   ],
+                                // ),
+                                Text(
+                                  '${widget.product.price}'.priceFormat(),
+                                  style: poppinsRegular.copyWith(
+                                      color: ColorResources.red,
+                                      fontSize: Dimensions.fontSizeExtraLarge),
                                 ),
                               ]),
                         ),
                       ]),
-                  Row(
-                    children: [
-                      const SizedBox(width: Dimensions.paddingSizeDefault),
-                      const SizedBox(width: Dimensions.paddingSizeDefault),
-                      Text(
-                        '${widget.product.price}'.priceFormat(),
-                        style: poppinsRegular.copyWith(
-                            color: ColorResources.primaryMaterial,
-                            fontSize: Dimensions.fontSizeExtraLarge),
-                      ),
-                    ],
-                  ),
                 ],
               ),
-              const SizedBox(height: Dimensions.paddingSizeSmall),
               const SizedBox(
                 height: Dimensions.paddingSizeSmall,
               ),
-              Row(children: [
-                const Text('Quantity', style: poppinsBold),
-                const SizedBox(
-                  width: 8,
-                ),
-                // QuantityButton(
-                //     isIncrement: false,
-                //     quantity: quantity1,
-                //     stock: 10,
-                //     minimumOrderQuantity: 1,
-                //     digitalProduct: true),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      if (quantity > 1) {
-                        quantity -= 1;
-                      }
-                    });
-                  },
-                  child: const Text('-'),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Text('$quantity', style: poppinsSemiBold),
-                const SizedBox(
-                  width: 8,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      quantity += 1;
-                    });
-                  },
-                  child: const Text('+'),
-                ),
-                // QuantityButton(
-                //     isIncrement: true,
-                //     quantity: quantity1,
-                //     stock: 10,
-                //     minimumOrderQuantity: 1,
-                //     digitalProduct: true),
-              ]),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     const Text('Quantity', style: poppinsBold),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     // QuantityButton(
+              //     //     isIncrement: false,
+              //     //     quantity: quantity1,
+              //     //     stock: 10,
+              //     //     minimumOrderQuantity: 1,
+              //     //     digitalProduct: true),
+              //     ElevatedButton(
+              //       onPressed: () {
+              //         setState(
+              //           () {
+              //             if (quantity > 1) {
+              //               quantity -= 1;
+              //             }
+              //           },
+              //         );
+              //       },
+              //       child: const Text('-'),
+              //     ),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     Text('$quantity', style: poppinsSemiBold),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     ElevatedButton(
+              //       onPressed: () {
+              //         setState(() {
+              //           quantity += 1;
+              //         });
+              //       },
+              //       child: const Text('+'),
+              //     ),
+              //     // QuantityButton(
+              //     //     isIncrement: true,
+              //     //     quantity: quantity1,
+              //     //     stock: 10,
+              //     //     minimumOrderQuantity: 1,
+              //     //     digitalProduct: true),
+              //   ],
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Quantity',
+                    style: poppinsRegular.copyWith(
+                        fontSize: Dimensions.fontSizeLarge),
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(
+                            () {
+                              if (quantity > 1) {
+                                quantity -= 1;
+                              }
+                            },
+                          );
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20)),
+                            color: ColorResources.primaryMaterial,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 9),
+                          child: const Icon(
+                            Icons.remove,
+                            size: 16,
+                            color: ColorResources.white,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 60,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ColorResources.primaryMaterial,
+                            width: 2,
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Text(
+                          '$quantity',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            quantity += 1;
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 9),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20),
+                                bottomRight: Radius.circular(20)),
+                            color: ColorResources.primaryMaterial,
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            size: 16,
+                            color: ColorResources.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+
+              // const SizedBox(height: Dimensions.paddingSizeSmall),
+              // Divider(
+              //   thickness: 1,
+              //   color: ColorResources.black,
+              // ),
+              // const SizedBox(height: Dimensions.paddingSizeSmall),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       'Total Price',
+              //       style: poppinsRegular.copyWith(
+              //           color: ColorResources.black,
+              //           fontSize: Dimensions.fontSizeExtraLarge),
+              //     ),
+              //     const SizedBox(width: Dimensions.paddingSizeSmall),
+              //     Text(
+              //       '${widget.product.price! * quantity}'.priceFormat(),
+              //       style: poppinsRegular.copyWith(
+              //           color: ColorResources.red,
+              //           fontSize: Dimensions.fontSizeExtraLarge),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: Dimensions.paddingSizeSmall),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Text('Total Price', style: poppinsBold),
-                const SizedBox(width: Dimensions.paddingSizeSmall),
-                Text(
-                  '${widget.product.price! * quantity}'.priceFormat(),
-                  style: poppinsBold.copyWith(
-                      color: ColorResources.primaryMaterial,
-                      fontSize: Dimensions.fontSizeLarge),
-                ),
-              ]),
+              Divider(
+                thickness: 1,
+                color: ColorResources.black,
+              ),
               const SizedBox(height: Dimensions.paddingSizeSmall),
               Row(
                 children: [
                   Expanded(
                     child: CustomButton(
-                        buttonText: 'Add to Cart',
-                        onTap: () {
-                          context.read<CheckoutBloc>().add(
-                                CheckoutEvent.addToCart(
-                                    widget.product, quantity),
-                              );
-                          Navigator.pop(context);
-                        }),
+                      buttonText: 'Add to Cart',
+                      onTap: () {
+                        context.read<CheckoutBloc>().add(
+                              CheckoutEvent.addToCart(widget.product, quantity),
+                            );
+                        CustomSnackbar.showSnackbar(
+                          context,
+                          "'${widget.product.model ?? '-'} ${widget.product.type ?? '-'}' successfully add to basket",
+                          actionText: '',
+                          onPressed: () {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder:
+                            //             (context) =>
+                            //                 const HomeScreen()));
+                          },
+                        );
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
                   const SizedBox(width: Dimensions.paddingSizeDefault),
                   Expanded(
                     child: CustomButton(
-                        isBuy: true, buttonText: 'Buy Now', onTap: () {}),
+                      isBuy: true,
+                      buttonText: 'Buy Now',
+                      onTap: () {
+                        context.read<CheckoutBloc>().add(
+                              CheckoutEvent.addToCart(widget.product, quantity),
+                            );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutPage(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

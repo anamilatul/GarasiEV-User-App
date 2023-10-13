@@ -7,6 +7,7 @@ import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
 import '../../cart/cart_page.dart';
+import '../../checkout/checkout_page.dart';
 import 'cart_bottom_sheet.dart';
 
 class BottomCart extends StatefulWidget {
@@ -57,6 +58,22 @@ class _BottomCartState extends State<BottomCart> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      // if (vacationIsOn || temporaryClose) {
+                      // } else {
+                      //   showModalBottomSheet(
+                      //     context: context,
+                      //     isScrollControlled: true,
+                      //     backgroundColor:
+                      //         Theme.of(context).primaryColor.withOpacity(0),
+                      //     builder: (con) => CartBottomSheet(
+                      //       product: widget.product,
+                      //       callback: () {
+                      //         customSnackBar('Add to Cart', context,
+                      //             isError: false);
+                      //       },
+                      //     ),
+                      //   );
+                      // }
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const CartPage()));
                     },
@@ -110,6 +127,16 @@ class _BottomCartState extends State<BottomCart> {
             flex: 11,
             child: InkWell(
               onTap: () {
+                // context.read<CheckoutBloc>().add(
+                //       CheckoutEvent.addToCart(widget.product, 1),
+                //     );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => CheckoutPage(),
+                //   ),
+                // );
+
                 if (vacationIsOn || temporaryClose) {
                 } else {
                   showModalBottomSheet(
@@ -120,7 +147,7 @@ class _BottomCartState extends State<BottomCart> {
                     builder: (con) => CartBottomSheet(
                       product: widget.product,
                       callback: () {
-                        customSnackBar('Add to Cart', context, isError: false);
+                        customSnackBar('', context, isError: false);
                       },
                     ),
                   );
@@ -135,7 +162,7 @@ class _BottomCartState extends State<BottomCart> {
                   color: ColorResources.primaryMaterial,
                 ),
                 child: Text(
-                  'Add to Cart',
+                  'Add To Cart',
                   style: poppinsSemiBold.copyWith(
                       fontSize: Dimensions.fontSizeLarge,
                       color: Theme.of(context).highlightColor),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_garasi_ev/utils/color_resources.dart';
 import 'package:flutter_garasi_ev/utils/costum_themes.dart';
 import '../../../../utils/dimensions.dart';
 
@@ -28,27 +29,35 @@ class CustomButton extends StatelessWidget {
         height: 45,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: backgroundColor ??
-                (isBuy
-                    ? const Color(0xffFE961C)
-                    : Theme.of(context).primaryColor),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 7,
-                  offset: const Offset(0, 1)), // changes position of shadow
-            ],
-            borderRadius: BorderRadius.circular(radius != null
-                ? radius!
-                : isBorder
-                    ? Dimensions.paddingSizeExtraSmall
-                    : Dimensions.paddingSizeSmall)),
-        child: Text(buttonText!,
-            style: poppinsSemiBold.copyWith(
-              fontSize: 16,
-              color: Theme.of(context).highlightColor,
-            )),
+          color: isBuy
+              ? ColorResources.white
+              : (backgroundColor ?? ColorResources.primaryMaterial),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 7,
+              offset: const Offset(0, 1),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(
+            radius != null ? radius! : (isBorder ? 25 : 25),
+          ),
+          border: isBuy
+              ? Border.all(
+                  color: ColorResources.primaryMaterial,
+                )
+              : null,
+        ),
+        child: Text(
+          buttonText!,
+          style: TextStyle(
+            fontSize: 16,
+            color: isBuy
+                ? ColorResources.primaryMaterial
+                : Theme.of(context).highlightColor,
+          ),
+        ),
       ),
     );
   }
