@@ -28,166 +28,215 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Checkout')),
-      body: BlocBuilder<CheckoutBloc, CheckoutState>(builder: (context, state) {
-        return state.maybeWhen(orElse: () {
-          return const CircularProgressIndicator();
-        }, loaded: (product) {
-          items = product
-              .map((e) => Item(id: e.product.id!, quantity: e.quantity))
-              .toList();
-          product.forEach(
-            (element) {
-              subTotalPrice += element.quantity * element.product.price!;
-            },
-          );
-          totalPrice = subTotalPrice + shippingCost;
-          return ListView(physics: const BouncingScrollPhysics(), children: [
+      appBar: AppBar(
+        title: Row(
+          children: [
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Icon(Icons.arrow_back, color: Colors.black, size: 20),
+              ),
+            ),
             const SizedBox(
-              height: 8,
+              width: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingSizeDefault),
-              child: Text(
-                'Shipping Address',
-                style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-              ),
+            Text(
+              'Checkout',
+              style: poppinsRegular.copyWith(fontSize: 20, color: Colors.black),
             ),
-            Container(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                child: TextField(
-                  controller: _shoppingAddress,
-                  maxLines: 4,
-                  decoration: const InputDecoration(
-                      border:
-                          OutlineInputBorder(borderSide: BorderSide(width: 1))),
-                )),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingSizeDefault),
-              child: Text(
-                'Order Detail',
-                style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-              ),
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: product.length,
-                itemBuilder: (ctx, index) {
-                  final listProduct = product[index];
-                  return Padding(
-                    padding:
-                        const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                    child: Row(children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: .5,
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(.25)),
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.paddingSizeExtraExtraSmall),
+          ],
+        ),
+        automaticallyImplyLeading: false,
+        elevation: 1,
+        backgroundColor: Colors.white,
+      ),
+      body: BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () {
+              return const CircularProgressIndicator();
+            },
+            loaded: (product) {
+              items = product
+                  .map((e) => Item(id: e.product.id!, quantity: e.quantity))
+                  .toList();
+              product.forEach(
+                (element) {
+                  subTotalPrice += element.quantity * element.product.price!;
+                },
+              );
+              totalPrice = subTotalPrice + shippingCost;
+              return ListView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.paddingSizeDefault),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Shipping Address',
+                          style: poppinsBold.copyWith(
+                              fontSize: Dimensions.fontSizeLarge),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.paddingSizeExtraExtraSmall),
-                          child: FadeInImage.assetNetwork(
-                            placeholder: Images.placeholder,
-                            fit: BoxFit.cover,
-                            width: 50,
-                            height: 50,
-                            image: listProduct.product.imageProduct!,
-                            imageErrorBuilder: (c, o, s) => Image.asset(
-                                Images.placeholder,
-                                fit: BoxFit.cover,
-                                width: 50,
-                                height: 50),
-                          ),
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: Dimensions.paddingSizeSmall),
+                            child: TextField(
+                              controller: _shoppingAddress,
+                              maxLines: 4,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(width: 1))),
+                            )),
+                        Text(
+                          'Order Detail',
+                          style: poppinsBold.copyWith(
+                              fontSize: Dimensions.fontSizeLarge),
                         ),
-                      ),
-                      const SizedBox(width: Dimensions.marginSizeDefault),
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "${listProduct.product.model} ${listProduct.product.type}",
-                                      style: poppinsRegular.copyWith(
-                                          fontSize: Dimensions.fontSizeDefault,
-                                          color:
-                                              ColorResources.primaryMaterial),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: product.length,
+                          itemBuilder: (ctx, index) {
+                            final listProduct = product[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: Dimensions.paddingSizeSmall),
+                              child: Row(children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: .5,
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(.25)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.paddingSizeExtraExtraSmall),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.paddingSizeExtraExtraSmall),
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder: Images.placeholder,
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                      image: listProduct.product.imageProduct!,
+                                      imageErrorBuilder: (c, o, s) =>
+                                          Image.asset(Images.placeholder,
+                                              fit: BoxFit.cover,
+                                              width: 50,
+                                              height: 50),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: Dimensions.paddingSizeSmall,
-                                  ),
-                                  Text(
-                                    '${listProduct.product.price! * listProduct.quantity}'
-                                        .priceFormat(),
-                                    style: poppinsSemiBold.copyWith(
-                                        fontSize: Dimensions.fontSizeLarge),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                  height: Dimensions.marginSizeExtraSmall),
-                              Row(children: [
-                                Text('Qty -  ${listProduct.quantity}',
-                                    style: poppinsRegular.copyWith()),
+                                ),
+                                const SizedBox(
+                                    width: Dimensions.marginSizeDefault),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                "${listProduct.product.model} ${listProduct.product.type}",
+                                                style: poppinsRegular.copyWith(
+                                                    fontSize: Dimensions
+                                                        .fontSizeDefault,
+                                                    color: ColorResources
+                                                        .primaryMaterial),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width:
+                                                  Dimensions.paddingSizeSmall,
+                                            ),
+                                            Text(
+                                              '${listProduct.product.price! * listProduct.quantity}'
+                                                  .priceFormat(),
+                                              style: poppinsSemiBold.copyWith(
+                                                  fontSize:
+                                                      Dimensions.fontSizeLarge),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                            height: Dimensions
+                                                .marginSizeExtraSmall),
+                                        Row(children: [
+                                          Text('Qty -  ${listProduct.quantity}',
+                                              style: poppinsRegular.copyWith()),
+                                        ]),
+                                      ]),
+                                ),
                               ]),
-                            ]),
-                      ),
-                    ]),
-                  );
-                }),
-
-            Container(
-              height: 40,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(.055),
-              ),
-              child: Center(
-                  child: Text(
-                'Order Summary',
-                style: poppinsSemiBold.copyWith(
-                    fontSize: Dimensions.fontSizeLarge),
-              )),
-            ),
-            // Total bill
-            Container(
-              margin: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
-              padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-              color: Theme.of(context).highlightColor,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AmountWidget(
-                      title: 'Sub Total :',
-                      amount: '$subTotalPrice'.priceFormat(),
+                            );
+                          },
+                        ),
+                        Container(
+                          height: 35,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(.055),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              'Order Summary',
+                              style: poppinsSemiBold.copyWith(
+                                  fontSize: Dimensions.fontSizeLarge),
+                            ),
+                          ),
+                        ),
+                        // Total bill
+                        Container(
+                          margin: const EdgeInsets.only(
+                              top: Dimensions.paddingSizeSmall),
+                          padding:
+                              const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                          color: Theme.of(context).highlightColor,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AmountWidget(
+                                  title: 'Sub Total :',
+                                  amount: '$subTotalPrice'.priceFormat(),
+                                ),
+                                AmountWidget(
+                                    title: 'Shipping Cost: ',
+                                    amount: '$shippingCost'.priceFormat()),
+                                Divider(
+                                    height: 5,
+                                    color: Theme.of(context).hintColor),
+                                AmountWidget(
+                                  title: 'Total :',
+                                  amount: '$totalPrice'.priceFormat(),
+                                ),
+                              ]),
+                        ),
+                      ],
                     ),
-                    AmountWidget(
-                        title: 'Shipping Cost: ',
-                        amount: '$shippingCost'.priceFormat()),
-                    Divider(height: 5, color: Theme.of(context).hintColor),
-                    AmountWidget(
-                      title: 'Total :',
-                      amount: '$totalPrice'.priceFormat(),
-                    ),
-                  ]),
-            ),
-          ]);
-        });
-      }),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
       bottomNavigationBar: BlocConsumer<OrderBloc, OrderState>(
         listener: (context, state) {
           state.maybeWhen(
@@ -212,24 +261,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   context.read<CheckoutBloc>().add(const CheckoutEvent.clear());
                 },
                 child: Container(
-                  height: 60,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingSizeLarge,
-                      vertical: Dimensions.paddingSizeDefault),
-                  decoration: const BoxDecoration(
-                      color: ColorResources.primaryMaterial),
-                  child: Center(
-                      child: Builder(
-                    builder: (context) => Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width / 2.9),
-                      child: Text('Proceed',
-                          style: poppinsSemiBold.copyWith(
-                            fontSize: Dimensions.fontSizeExtraLarge,
-                            color: Theme.of(context).cardColor,
-                          )),
+                  decoration: BoxDecoration(
+                      border: Border(top: BorderSide(color: Colors.grey))),
+                  height: 70,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: ColorResources.primaryMaterial,
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                  )),
+                    child: Center(
+                        child: Builder(
+                      builder: (context) => Text(
+                        'Make an Order',
+                        style: poppinsRegular.copyWith(
+                          fontSize: Dimensions.fontSizeExtraLarge,
+                          color: Theme.of(context).cardColor,
+                        ),
+                      ),
+                    )),
+                  ),
                 ),
               );
             },

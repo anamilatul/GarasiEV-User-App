@@ -8,7 +8,9 @@ import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
 import '../../cart/cart_page.dart';
 import '../../checkout/checkout_page.dart';
+import 'buy_now_bottom_sheet.dart';
 import 'cart_bottom_sheet.dart';
+import '../../custom_widgets/button/custom_button.dart';
 
 class BottomCart extends StatefulWidget {
   final Product product;
@@ -51,78 +53,90 @@ class _BottomCartState extends State<BottomCart> {
       child: Row(
         children: [
           Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-              child: Stack(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // if (vacationIsOn || temporaryClose) {
-                      // } else {
-                      //   showModalBottomSheet(
-                      //     context: context,
-                      //     isScrollControlled: true,
-                      //     backgroundColor:
-                      //         Theme.of(context).primaryColor.withOpacity(0),
-                      //     builder: (con) => CartBottomSheet(
-                      //       product: widget.product,
-                      //       callback: () {
-                      //         customSnackBar('Add to Cart', context,
-                      //             isError: false);
-                      //       },
-                      //     ),
-                      //   );
-                      // }
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const CartPage()));
-                    },
-                    child: const Icon(
-                      Icons.shopping_bag_outlined,
-                      color: ColorResources.black,
-                      size: 40,
+            flex: 2,
+            child: GestureDetector(
+              onTap: () {
+                if (vacationIsOn || temporaryClose) {
+                } else {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(0),
+                    builder: (con) => CartBottomSheet(
+                      product: widget.product,
+                      callback: () {
+                        customSnackBar('', context, isError: false);
+                      },
                     ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 25,
-                    child: Container(
-                      height: 17,
-                      width: 17,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: ColorResources.red,
-                      ),
-                      child: BlocBuilder<CheckoutBloc, CheckoutState>(
-                        builder: (context, state) {
-                          return state.map(loading: (value) {
-                            return const CircularProgressIndicator();
-                          }, loaded: (value) {
-                            int totalQuantity = 0;
-                            value.product.forEach(
-                              (element) {
-                                totalQuantity += element.quantity;
-                              },
-                            );
-                            // for (var element in value.product) {
-                            //   totalQuantity += element.quantity;
-                            // }
-                            return Text(
-                              '$totalQuantity',
-                              style: poppinsSemiBold.copyWith(
-                                  fontSize: Dimensions.fontSizeExtraSmall,
-                                  color: Theme.of(context).highlightColor),
-                            );
-                          });
-                        },
-                      ),
-                    ),
-                  )
-                ],
+                  );
+                }
+              },
+              child: const Icon(
+                Icons.add_shopping_cart_outlined,
+                color: ColorResources.black,
+                size: 40,
               ),
             ),
           ),
+          // Expanded(
+          //   flex: 3,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+          //     child: Stack(
+          //       children: [
+          //         GestureDetector(
+          //           onTap: () {
+
+          //             Navigator.of(context).push(MaterialPageRoute(
+          //                 builder: (context) => const CartPage()));
+          //           },
+          //           child: const Icon(
+          //             Icons.shopping_bag_outlined,
+          //             color: ColorResources.black,
+          //             size: 40,
+          //           ),
+          //         ),
+          //         Positioned(
+          //           top: 0,
+          //           right: 25,
+          //           child: Container(
+          //             height: 17,
+          //             width: 17,
+          //             alignment: Alignment.center,
+          //             decoration: const BoxDecoration(
+          //               shape: BoxShape.circle,
+          //               color: ColorResources.red,
+          //             ),
+          //             child: BlocBuilder<CheckoutBloc, CheckoutState>(
+          //               builder: (context, state) {
+          //                 return state.map(loading: (value) {
+          //                   return const CircularProgressIndicator();
+          //                 }, loaded: (value) {
+          //                   int totalQuantity = 0;
+          //                   value.product.forEach(
+          //                     (element) {
+          //                       totalQuantity += element.quantity;
+          //                     },
+          //                   );
+          //                   // for (var element in value.product) {
+          //                   //   totalQuantity += element.quantity;
+          //                   // }
+          //                   return Text(
+          //                     '$totalQuantity',
+          //                     style: poppinsSemiBold.copyWith(
+          //                         fontSize: Dimensions.fontSizeExtraSmall,
+          //                         color: Theme.of(context).highlightColor),
+          //                   );
+          //                 });
+          //               },
+          //             ),
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Expanded(
             flex: 11,
             child: InkWell(
@@ -144,7 +158,7 @@ class _BottomCartState extends State<BottomCart> {
                     isScrollControlled: true,
                     backgroundColor:
                         Theme.of(context).primaryColor.withOpacity(0),
-                    builder: (con) => CartBottomSheet(
+                    builder: (con) => BuyNowBottomSheet(
                       product: widget.product,
                       callback: () {
                         customSnackBar('', context, isError: false);
@@ -162,7 +176,7 @@ class _BottomCartState extends State<BottomCart> {
                   color: ColorResources.primaryMaterial,
                 ),
                 child: Text(
-                  'Add To Cart',
+                  'Buy Now',
                   style: poppinsSemiBold.copyWith(
                       fontSize: Dimensions.fontSizeLarge,
                       color: Theme.of(context).highlightColor),

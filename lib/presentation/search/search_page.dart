@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_garasi_ev/presentation/custom_widgets/button/custom_button.dart';
+import 'package:flutter_garasi_ev/utils/color_resources.dart';
 
 import '../../bloc/product/product_bloc.dart';
 import '../../data/models/product_response_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../utils/costum_themes.dart';
+import '../../utils/dimensions.dart';
+import '../custom_widgets/text_field/custom_textfield.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SearchPageState createState() => _SearchPageState();
 }
 
@@ -16,6 +21,10 @@ class _SearchPageState extends State<SearchPage> {
   TextEditingController weightController = TextEditingController();
   TextEditingController rangeController = TextEditingController();
   TextEditingController speedController = TextEditingController();
+
+  final FocusNode _weightNode = FocusNode();
+  final FocusNode _rangeNode = FocusNode();
+  final FocusNode _speedeNode = FocusNode();
 
   List<Product> searchResults = [];
   void performSearch(List<Product> products) {
@@ -49,13 +58,24 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pencarian Produk'),
+        title: Text(
+          'Search ',
+          style: poppinsRegular.copyWith(fontSize: 20, color: Colors.black),
+        ),
+        automaticallyImplyLeading: false,
+        elevation: 1,
+        backgroundColor: Colors.white,
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
-              return const Center(
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            loading: () {
+              return Center(
                 child: CircularProgressIndicator(),
               );
             },
@@ -67,33 +87,47 @@ class _SearchPageState extends State<SearchPage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        TextField(
+                        // Text(
+                        //   "Here you can search for Garasi EV products, \naccording to what you need !",
+                        //   style: poppinsRegular.copyWith(fontSize: 15, color: Colors.black),
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        CustomTextField(
+                          hintText: 'Berat Badan Driver (kg)',
+                          focusNode: _weightNode,
+                          nextNode: _rangeNode,
+                          textInputType: TextInputType.number,
                           controller: weightController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Berat Badan Driver (kg)',
-                          ),
                         ),
-                        TextField(
+                        SizedBox(
+                          height: 5,
+                        ),
+                        CustomTextField(
+                          hintText: 'Jarak',
+                          focusNode: _rangeNode,
+                          nextNode: _speedeNode,
+                          textInputType: TextInputType.number,
                           controller: rangeController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Jarak',
-                          ),
                         ),
-                        TextField(
+                        SizedBox(
+                          height: 5,
+                        ),
+                        CustomTextField(
+                          hintText: 'Kecepatan',
+                          focusNode: _speedeNode,
+                          textInputType: TextInputType.number,
                           controller: speedController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Kecepatan',
-                          ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            performSearch(products);
-                          },
-                          child: const Text('Cari'),
+                        SizedBox(
+                          height: 10,
                         ),
+                        CustomButton(
+                            onTap: () {
+                              performSearch(products);
+                            },
+                            buttonText: "Find"),
                       ],
                     ),
                   ),

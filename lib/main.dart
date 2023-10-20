@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/banner/banner_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/category/category_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_garasi_ev/bloc/my_order/my_order_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/order/order_bloc.dart';
+import 'package:flutter_garasi_ev/bloc/profile/profile_bloc.dart';
 import 'package:flutter_garasi_ev/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_garasi_ev/presentation/main_page.dart';
 import 'bloc/login/login_bloc.dart';
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
           create: (context) => LogoutBloc(),
         ),
         BlocProvider(
+          create: (context) => ProfileBloc(),
+        ),
+        BlocProvider(
           create: (context) => ProductBloc(),
         ),
         BlocProvider(
@@ -47,6 +52,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => MyOrderBloc(),
         ),
       ],
       child: MaterialApp(

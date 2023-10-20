@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         icon: Stack(clipBehavior: Clip.none, children: [
                           const Icon(
-                            Icons.shopping_bag_outlined,
+                            Icons.shopping_cart_outlined,
                             color: ColorResources.black,
                             size: 28,
                           ),
@@ -224,9 +224,35 @@ class _HomePageState extends State<HomePage> {
                         BlocBuilder<CategoryBloc, CategoryState>(
                           builder: (context, state) {
                             return state.maybeWhen(orElse: () {
-                              return const Center(
-                                child: CircularProgressIndicator(),
+                              return Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 5,
+                                    childAspectRatio: 3,
+                                  ),
+                                  itemCount: 3, // Tampilkan 3 placeholder
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.paddingSizeExtraLarge),
+                                      ),
+                                    );
+                                  },
+                                ),
                               );
+                              // return const Center(
+                              //   child: CircularProgressIndicator(),
+                              // );
                             }, loaded: (model) {
                               final filteredData = model.data
                                       ?.where((item) =>
@@ -377,18 +403,25 @@ class _HomePageState extends State<HomePage> {
                           sliver: SliverGrid(
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
+                              crossAxisCount: 2,
                               mainAxisSpacing: 10.0,
                               crossAxisSpacing: 10.0,
                               childAspectRatio: 1.5 / 2,
                             ),
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
+                                return Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
                                 );
                               },
-                              childCount: 1,
+                              childCount: 4,
                             ),
                           ),
                         );

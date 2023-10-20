@@ -132,7 +132,7 @@ class _DetailProductState extends State<DetailProduct> {
                                           child: Container(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                                '${widget.product.powerMotor}'),
+                                                '${widget.product.powerMotor} W'),
                                           ),
                                         ),
                                       ],
@@ -204,7 +204,7 @@ class _DetailProductState extends State<DetailProduct> {
                                           child: Container(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                                '${widget.product.maxLoad}'),
+                                                '${widget.product.maxLoad} kg'),
                                           ),
                                         ),
                                       ],
@@ -222,7 +222,7 @@ class _DetailProductState extends State<DetailProduct> {
                                           child: Container(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                                '${widget.product.topSpeed}'),
+                                                '${widget.product.topSpeed} km/h'),
                                           ),
                                         ),
                                       ],
@@ -258,7 +258,7 @@ class _DetailProductState extends State<DetailProduct> {
                                           child: Container(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                                '${widget.product.weight}'),
+                                                '${widget.product.weight} W'),
                                           ),
                                         ),
                                       ],

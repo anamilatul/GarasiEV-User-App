@@ -95,10 +95,12 @@ class ProductItem extends StatelessWidget {
                       size: Dimensions.fontSizeSmall,
                     ),
                     SizedBox(width: 1),
-                    Text('${product.rating}',
-                        style: poppinsRegular.copyWith(
-                          fontSize: Dimensions.fontSizeSmall,
-                        )),
+                    Text(
+                      '${product.rating}',
+                      style: poppinsRegular.copyWith(
+                        fontSize: Dimensions.fontSizeSmall,
+                      ),
+                    ),
                   ]),
                   const SizedBox(height: 2),
                   Text(

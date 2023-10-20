@@ -12,20 +12,20 @@ import '../../../utils/images.dart';
 import '../../custom_widgets/button/custom_button.dart';
 import 'add_product_snackbar.dart';
 
-class CartBottomSheet extends StatefulWidget {
+class BuyNowBottomSheet extends StatefulWidget {
   final Function? callback; //biar quantity yg diatas cart muncul
   final Product product;
-  const CartBottomSheet({
+  const BuyNowBottomSheet({
     Key? key,
     this.callback,
     required this.product,
   }) : super(key: key);
 
   @override
-  CartBottomSheetState createState() => CartBottomSheetState();
+  BuyNowBottomSheetState createState() => BuyNowBottomSheetState();
 }
 
-class CartBottomSheetState extends State<CartBottomSheet> {
+class BuyNowBottomSheetState extends State<BuyNowBottomSheet> {
   // route(bool isRoute, String message) async {}
   int quantity = 1;
   @override
@@ -138,54 +138,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
               const SizedBox(
                 height: Dimensions.paddingSizeSmall,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     const Text('Quantity', style: poppinsBold),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     // QuantityButton(
-              //     //     isIncrement: false,
-              //     //     quantity: quantity1,
-              //     //     stock: 10,
-              //     //     minimumOrderQuantity: 1,
-              //     //     digitalProduct: true),
-              //     ElevatedButton(
-              //       onPressed: () {
-              //         setState(
-              //           () {
-              //             if (quantity > 1) {
-              //               quantity -= 1;
-              //             }
-              //           },
-              //         );
-              //       },
-              //       child: const Text('-'),
-              //     ),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     Text('$quantity', style: poppinsSemiBold),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     ElevatedButton(
-              //       onPressed: () {
-              //         setState(() {
-              //           quantity += 1;
-              //         });
-              //       },
-              //       child: const Text('+'),
-              //     ),
-              //     // QuantityButton(
-              //     //     isIncrement: true,
-              //     //     quantity: quantity1,
-              //     //     stock: 10,
-              //     //     minimumOrderQuantity: 1,
-              //     //     digitalProduct: true),
-              //   ],
-              // ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -302,46 +255,21 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      buttonText: 'Add to Cart',
+                      isBuy: true,
+                      buttonText: 'Buy Now',
                       onTap: () {
                         context.read<CheckoutBloc>().add(
                               CheckoutEvent.addToCart(widget.product, quantity),
                             );
-                        CustomSnackbar.showSnackbar(
+                        Navigator.push(
                           context,
-                          "'${widget.product.model ?? '-'} ${widget.product.type ?? '-'}' successfully add to basket",
-                          actionText: '',
-                          onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder:
-                            //             (context) =>
-                            //                 const HomeScreen()));
-                          },
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutPage(),
+                          ),
                         );
-                        Navigator.pop(context);
                       },
                     ),
                   ),
-                  // const SizedBox(width: Dimensions.paddingSizeDefault),
-                  // Expanded(
-                  //   child: CustomButton(
-                  //     isBuy: true,
-                  //     buttonText: 'Buy Now',
-                  //     onTap: () {
-                  //       context.read<CheckoutBloc>().add(
-                  //             CheckoutEvent.addToCart(widget.product, quantity),
-                  //           );
-                  //       Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //           builder: (context) => CheckoutPage(),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
             ],
