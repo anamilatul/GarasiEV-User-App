@@ -125,6 +125,24 @@ class _DetailProductState extends State<DetailProduct> {
                                           child: Container(
                                             padding: EdgeInsets.all(8.0),
                                             color: Colors.grey[200],
+                                            child: Text('Range'),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${widget.product.range} km'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.grey[200],
                                             child: Text('Power Motor'),
                                           ),
                                         ),

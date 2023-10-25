@@ -26,4 +26,16 @@ class AuthLocalDataSource {
     final authJson = preferences.getString('auth') ?? '';
     return authJson.isNotEmpty;
   }
+
+  Future<bool> saveUserId(int userId) async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final result = await preferences.setInt('user_id', userId);
+    return result;
+  }
+
+  Future<int> getUserId() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final userId = preferences.getInt('user_id') ?? 0;
+    return userId;
+  }
 }

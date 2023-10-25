@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/profile/profile_bloc.dart';
 import 'package:flutter_garasi_ev/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_garasi_ev/presentation/auth/login_page.dart';
-import 'package:flutter_garasi_ev/presentation/main_page.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
 
 import '../../bloc/logout/logout_bloc.dart';
+import 'widget/update_profile_bottom_sheet.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -16,9 +16,13 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
   @override
   void initState() {
-    context.read<ProfileBloc>().add(const ProfileEvent.getProfile());
+    // context.read<ProfileBloc>().add(const ProfileEvent.getProfile());
     super.initState();
   }
 
@@ -28,16 +32,57 @@ class _AccountPageState extends State<AccountPage> {
       appBar: AppBar(
         backgroundColor: ColorResources.primaryMaterial,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MainPage()));
-          },
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-        ),
         title: Text(
           'Profile',
         ),
+        actions: [
+          BlocConsumer<LogoutBloc, LogoutState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                  orElse: () {},
+                  loaded: (message) {
+                    AuthLocalDataSource().removeAuth();
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Logout Successfully"),
+                      backgroundColor: Colors.green,
+                    ));
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                        (route) => false);
+                  },
+                  error: ((message) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(message),
+                      backgroundColor: Colors.red,
+                    ));
+                  }));
+            },
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () {
+                  return IconButton(
+                    onPressed: () {
+                      context
+                          .read<LogoutBloc>()
+                          .add(const LogoutEvent.logout());
+                    },
+                    icon: Icon(
+                      Icons.logout_outlined,
+                      color: Colors.red,
+                    ),
+                  );
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -48,7 +93,7 @@ class _AccountPageState extends State<AccountPage> {
                   Stack(
                     children: [
                       Container(
-                        height: 70,
+                        height: 60,
                         width: MediaQuery.of(context).size.width,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -59,7 +104,7 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 10),
                         child: Center(
                           child: const CircleAvatar(
                             radius: 50,
@@ -149,8 +194,44 @@ class _AccountPageState extends State<AccountPage> {
                                 color: Colors.grey[300],
                               ),
                               ListTile(
-                                title: Text("Created At"),
+                                title: Text("Phone"),
                                 subtitle: LinearProgressIndicator(),
+                              ),
+                              Divider(
+                                indent: 10,
+                                endIndent: 10,
+                                thickness: 2,
+                                color: Colors.grey[300],
+                              ),
+                              ListTile(
+                                title: Text("Bio"),
+                                subtitle: LinearProgressIndicator(),
+                              ),
+                              Divider(
+                                indent: 10,
+                                endIndent: 10,
+                                thickness: 2,
+                                color: Colors.grey[300],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: ColorResources.primaryMaterial,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: MaterialButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    "Update Profile",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -188,9 +269,79 @@ class _AccountPageState extends State<AccountPage> {
                                   color: Colors.grey[300],
                                 ),
                                 ListTile(
-                                  title: Text("Created At"),
-                                  subtitle: Text(profile.createdAt.toString()),
+                                  title: Text("Phone"),
+                                  subtitle: Text(profile.phone ?? "-"),
                                 ),
+                                Divider(
+                                  indent: 10,
+                                  endIndent: 10,
+                                  thickness: 2,
+                                  color: Colors.grey[300],
+                                ),
+                                ListTile(
+                                  title: Text("Bio"),
+                                  subtitle: Text(profile.bio ?? "-"),
+                                ),
+                                Divider(
+                                  indent: 10,
+                                  endIndent: 10,
+                                  thickness: 2,
+                                  color: Colors.grey[300],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 20),
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color: ColorResources.primaryMaterial,
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      nameController.text = profile.name;
+                                      emailController.text = profile.email;
+                                      phoneController.text =
+                                          profile.phone ?? '';
+                                      bioController.text = profile.bio ?? '';
+                                      showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20),
+                                          ),
+                                        ),
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return UpdateProfileBottomSheet(
+                                            nameController: nameController,
+                                            emailController: emailController,
+                                            phoneController: phoneController,
+                                            bioController: bioController,
+                                            onUpdateProfile: () {
+                                              // Panggil metode untuk mengirim permintaan update profil ke backend di sini
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Update Profile",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                // ListTile(
+                                //   title: Text("Created At"),
+                                //   subtitle: Text(profile.createdAt.toString()),
+                                // ),
                               ],
                             ),
                           );
@@ -202,64 +353,6 @@ class _AccountPageState extends State<AccountPage> {
                     },
                   ),
                 ],
-              ),
-              BlocConsumer<LogoutBloc, LogoutState>(
-                listener: (context, state) {
-                  state.maybeWhen(
-                      orElse: () {},
-                      loaded: (message) {
-                        AuthLocalDataSource().removeAuth();
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text("Logout Successfully"),
-                          backgroundColor: Colors.green,
-                        ));
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                            (route) => false);
-                      },
-                      error: ((message) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(message),
-                          backgroundColor: Colors.red,
-                        ));
-                      }));
-                },
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    orElse: () {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors
-                              .red, // Ganti warna latar sesuai kebutuhan (misalnya merah)
-                          borderRadius: BorderRadius.circular(
-                              25), // Tambahkan radius border
-                        ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            context
-                                .read<LogoutBloc>()
-                                .add(const LogoutEvent.logout());
-                          },
-                          child: const Text(
-                            "Logout",
-                            style: TextStyle(
-                              color: Colors
-                                  .white, // Ganti warna teks sesuai kebutuhan (misalnya putih)
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                },
               ),
             ],
           ),

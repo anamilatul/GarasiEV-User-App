@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_garasi_ev/presentation/custom_widgets/button/custom_button.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../bloc/product/product_bloc.dart';
 import '../../data/models/product_response_model.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
 import '../custom_widgets/text_field/custom_textfield.dart';
+import '../home/widgets/product_item.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -132,16 +134,22 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: searchResults.length,
-                      itemBuilder: (context, index) {
-                        final product = searchResults[index];
-                        return ListTile(
-                          title: Text(
-                            "${product.model ?? '-'} ${product.type ?? '-'}",
-                          ),
-                        );
-                      },
+                    child: Column(
+                      children: [
+                        MasonryGridView.count(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: Dimensions.paddingSizeSmall),
+                          physics: const BouncingScrollPhysics(),
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 6,
+                          crossAxisSpacing: 8,
+                          itemCount: searchResults.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ProductItem(product: searchResults[index]);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -154,6 +162,17 @@ class _SearchPageState extends State<SearchPage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorResources.primaryMaterial,
+        onPressed: () {
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => const ScanScreen()));
+        },
+        child: const Icon(
+          Icons.qr_code_scanner,
+          color: ColorResources.white,
+        ),
       ),
     );
   }

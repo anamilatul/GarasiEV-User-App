@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_garasi_ev/data/models/profile_response_model.dart';
+import 'package:flutter_garasi_ev/data/models/request/profile_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../data/datasources/profile_remote_datasource.dart';

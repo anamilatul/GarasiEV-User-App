@@ -14,6 +14,7 @@ import '../cart/cart_page.dart';
 import 'widgets/banner.dart';
 import 'widgets/category_item.dart';
 import 'widgets/product_item.dart';
+import 'widgets/search_brand.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,10 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     context.read<ProductBloc>().add(const ProductEvent.getAll());
     context.read<CategoryBloc>().add(const CategoryEvent.getCategory());
-    // context.read<ProductBloc>().add(ProductEvent.getProductByCategory(4));
-    // context.read<ProductBloc>().add(
-    //       ProductEvent.getProductByCategory(5)
-    //     );
+
     super.initState();
     loadUserName();
   }
@@ -141,7 +139,12 @@ class _HomePageState extends State<HomePage> {
                     pinned: true,
                     delegate: SliverDelegate(
                         child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchBrand()));
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: Dimensions.homePagePadding,
@@ -303,13 +306,26 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 10,
                         ),
-                        const Padding(
+                        Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                          child: Row(children: [
-                            Expanded(
-                                child: Text('Products', style: titleHeader)),
-                          ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child:
+                                    Text('Recomendation', style: titleHeader),
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  "See All",
+                                  style: TextStyle(
+                                      color: ColorResources.primaryMaterial),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
