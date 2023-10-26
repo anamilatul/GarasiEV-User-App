@@ -57,9 +57,9 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.search,
+              Icons.electric_scooter,
             ),
-            label: 'Search',
+            label: 'Find',
           ),
           BottomNavigationBarItem(
             icon: Icon(

@@ -132,6 +132,7 @@ class _CartWidgetState extends State<CartWidget> {
                                                         Icons.arrow_back)),
                                                 Text(
                                                   'Confirmation',
+                                                  style: poppinsRegularLarge,
                                                 ),
                                               ],
                                             ),
@@ -141,7 +142,8 @@ class _CartWidgetState extends State<CartWidget> {
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16),
                                               child: Text(
-                                                'Do you want to remove ${widget.productQuantity.product.model} ${widget.productQuantity.product.type} ?',
+                                                'Do you want to remove "${widget.productQuantity.product.model} ${widget.productQuantity.product.type}" ?',
+                                                style: poppinsRegularLarge,
                                               ),
                                             ),
                                             const SizedBox(height: 16),
@@ -170,6 +172,7 @@ class _CartWidgetState extends State<CartWidget> {
                                                     ),
                                                     child: Text(
                                                       'No',
+                                                      style: poppinsRegular,
                                                     ),
                                                   ),
                                                 ),
@@ -205,6 +208,7 @@ class _CartWidgetState extends State<CartWidget> {
                                                     ),
                                                     child: Text(
                                                       'Yes',
+                                                      style: poppinsRegular,
                                                     ),
                                                   ),
                                                 ),

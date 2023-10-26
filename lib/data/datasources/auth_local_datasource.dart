@@ -27,15 +27,14 @@ class AuthLocalDataSource {
     return authJson.isNotEmpty;
   }
 
-  Future<bool> saveUserId(int userId) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final result = await preferences.setInt('user_id', userId);
-    return result;
-  }
-
   Future<int> getUserId() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final userId = preferences.getInt('user_id') ?? 0;
-    return userId;
+    final authJson = preferences.getString('auth') ?? '';
+    if (authJson.isNotEmpty) {
+      final authModel = AuthResponseModel.fromJson(authJson);
+      return authModel.user.id;
+    } else {
+      return -1;
+    }
   }
 }

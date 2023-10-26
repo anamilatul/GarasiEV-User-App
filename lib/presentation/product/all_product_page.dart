@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 import '../../bloc/product/product_bloc.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
 import '../home/widgets/product_item.dart';
 
-class CategoryProductsPage extends StatefulWidget {
-  final int id;
-  final String? name;
-  const CategoryProductsPage({
-    Key? key,
-    required this.id,
-    this.name,
-  }) : super(key: key);
+class AllProductPage extends StatefulWidget {
+  const AllProductPage({Key? key}) : super(key: key);
 
   @override
-  State<CategoryProductsPage> createState() => _CategoryProductsPageState();
+  State<AllProductPage> createState() => _AllProductPageState();
 }
 
-class _CategoryProductsPageState extends State<CategoryProductsPage> {
+class _AllProductPageState extends State<AllProductPage> {
   @override
   void initState() {
     super.initState();
     context.read<ProductBloc>().add(
-          ProductEvent.getProductByCategory(
-            widget.id,
-          ),
+          const ProductEvent.getAll(), // Ganti ini dengan event yang sesuai
         );
   }
 
@@ -45,7 +39,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
             ),
           ),
           const SizedBox(width: Dimensions.paddingSizeSmall),
-          Text('${widget.name}',
+          Text('All Products', // Ganti ini dengan judul yang sesuai
               style:
                   poppinsRegular.copyWith(fontSize: 20, color: Colors.black)),
         ]),
@@ -70,7 +64,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                 },
                 loaded: (model) {
                   return Expanded(
-                    child: MasonryGridView.count(
+                    child: StaggeredGridView.countBuilder(
                       padding: const EdgeInsets.symmetric(
                           horizontal: Dimensions.paddingSizeSmall),
                       physics: const BouncingScrollPhysics(),
@@ -78,10 +72,10 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                       mainAxisSpacing: 6,
                       crossAxisSpacing: 8,
                       itemCount: model.data!.length,
-                      shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         return ProductItem(product: model.data![index]);
                       },
+                      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
                     ),
                   );
                 },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_garasi_ev/bloc/category/category_bloc.dart';
+import 'package:flutter_garasi_ev/presentation/product/all_product_page.dart';
 import 'package:flutter_garasi_ev/utils/costum_themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -317,7 +318,13 @@ class _HomePageState extends State<HomePage> {
                                     Text('Recomendation', style: titleHeader),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AllProductPage()));
+                                },
                                 child: Text(
                                   "See All",
                                   style: TextStyle(
@@ -331,6 +338,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+
                 // BlocBuilder<ProductBloc, ProductState>(
                 //   builder: (context, state) {
                 //     return state.maybeWhen(
@@ -489,6 +497,75 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
+                // SliverToBoxAdapter(
+                //   child: Padding(
+                //     padding: const EdgeInsets.fromLTRB(
+                //         Dimensions.homePagePadding,
+                //         Dimensions.paddingSizeSmall,
+                //         Dimensions.paddingSizeDefault,
+                //         Dimensions.paddingSizeSmall),
+                //     child: Column(
+                //       children: [
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Expanded(
+                //               child: Text('Recomendation', style: titleHeader),
+                //             ),
+                //             InkWell(
+                //               onTap: () {},
+                //               child: Text(
+                //                 "See All",
+                //                 style: TextStyle(
+                //                     color: ColorResources.primaryMaterial),
+                //               ),
+                //             )
+                //           ],
+                //         ),
+                //         SizedBox(
+                //           height: 500,
+                //         ),
+                //         BlocBuilder<ProductBloc, ProductState>(
+                //           builder: (context, state) {
+                //             return state.maybeWhen(
+                //               orElse: () {
+                //                 return const Center(
+                //                   child: CircularProgressIndicator.adaptive(),
+                //                 );
+                //               },
+                //               loaded: (model) {
+                //                 final newestProducts = model.data!
+                //                     .where((product) =>
+                //                         product.category?.name ==
+                //                         "Recomendation")
+                //                     .toList();
+                //                 return Expanded(
+                //                   child: GridView.builder(
+                //                     gridDelegate:
+                //                         const SliverGridDelegateWithFixedCrossAxisCount(
+                //                       crossAxisCount:
+                //                           2, // Ubah jumlah kolom sesuai kebutuhan
+                //                       mainAxisSpacing:
+                //                           6, // Ubah spasi antar baris
+                //                       crossAxisSpacing:
+                //                           8, // Ubah spasi antar kolom
+                //                     ),
+                //                     itemCount: newestProducts.length,
+                //                     itemBuilder:
+                //                         (BuildContext context, int index) {
+                //                       return ProductItem(
+                //                           product: newestProducts[index]);
+                //                     },
+                //                   ),
+                //                 );
+                //               },
+                //             );
+                //           },
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

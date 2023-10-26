@@ -19,5 +19,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         (r) => emit(_Loaded(r)),
       );
     });
+    on<_UpdateProfile>((event, emit) async {
+      emit(const _Loading());
+      final result = await ProfileRemoteDataSource().updateProfile(event.model);
+      result.fold(
+        (l) => emit(_Error(l)),
+        (r) => emit(_Loaded(r)),
+      );
+    });
   }
 }

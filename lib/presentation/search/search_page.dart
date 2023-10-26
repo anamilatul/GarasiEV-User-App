@@ -61,7 +61,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Search ',
+          'Custom Produk ',
           style: poppinsRegular.copyWith(fontSize: 20, color: Colors.black),
         ),
         automaticallyImplyLeading: false,
@@ -72,8 +72,69 @@ class _SearchPageState extends State<SearchPage> {
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
-              return Center(
-                child: CircularProgressIndicator(),
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          hintText: 'Berat Badan Driver (kg)',
+                          focusNode: _weightNode,
+                          nextNode: _rangeNode,
+                          textInputType: TextInputType.number,
+                          controller: weightController,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        CustomTextField(
+                          hintText: 'Jarak',
+                          focusNode: _rangeNode,
+                          nextNode: _speedeNode,
+                          textInputType: TextInputType.number,
+                          controller: rangeController,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        CustomTextField(
+                          hintText: 'Kecepatan',
+                          focusNode: _speedeNode,
+                          textInputType: TextInputType.number,
+                          controller: speedController,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomButton(
+                            onTap: () {
+                              // performSearch(products);
+                            },
+                            buttonText: "Find"),
+                      ],
+                    ),
+                  ),
+                  // Expanded(
+                  //   child: ListView(
+                  //     children: [
+                  //       MasonryGridView.count(
+                  //         padding: const EdgeInsets.symmetric(
+                  //             horizontal: Dimensions.paddingSizeSmall),
+                  //         physics: const BouncingScrollPhysics(),
+                  //         crossAxisCount: 2,
+                  //         mainAxisSpacing: 6,
+                  //         crossAxisSpacing: 8,
+                  //         itemCount: searchResults.length,
+                  //         shrinkWrap: true,
+                  //         itemBuilder: (BuildContext context, int index) {
+                  //           return ProductItem(product: searchResults[index]);
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
               );
             },
             loading: () {
@@ -134,7 +195,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   Expanded(
-                    child: Column(
+                    child: ListView(
                       children: [
                         MasonryGridView.count(
                           padding: const EdgeInsets.symmetric(

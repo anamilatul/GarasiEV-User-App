@@ -4,9 +4,9 @@ import 'package:flutter_garasi_ev/bloc/profile/profile_bloc.dart';
 import 'package:flutter_garasi_ev/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_garasi_ev/presentation/auth/login_page.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
-
 import '../../bloc/logout/logout_bloc.dart';
-import 'widget/update_profile_bottom_sheet.dart';
+import '../../data/models/request/profile_request_model.dart';
+import '../../utils/costum_themes.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -16,6 +16,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  GlobalKey<FormState>? _formKey;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -24,6 +25,7 @@ class _AccountPageState extends State<AccountPage> {
   void initState() {
     // context.read<ProfileBloc>().add(const ProfileEvent.getProfile());
     super.initState();
+    _formKey = GlobalKey<FormState>();
   }
 
   @override
@@ -314,24 +316,169 @@ class _AccountPageState extends State<AccountPage> {
                                         ),
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return UpdateProfileBottomSheet(
-                                            nameController: nameController,
-                                            emailController: emailController,
-                                            phoneController: phoneController,
-                                            bioController: bioController,
-                                            onUpdateProfile: () {
-                                              // Panggil metode untuk mengirim permintaan update profil ke backend di sini
-                                              Navigator.pop(context);
-                                            },
+                                          return SingleChildScrollView(
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              padding: EdgeInsets.all(18),
+                                              child: Form(
+                                                key: _formKey,
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {},
+                                                          child: Icon(
+                                                            Icons.arrow_back,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(
+                                                          'Update Profile',
+                                                          style:
+                                                              poppinsRegularLarge,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 16),
+                                                    TextField(
+                                                      controller:
+                                                          nameController,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Name',
+                                                      ),
+                                                    ),
+                                                    TextField(
+                                                      controller:
+                                                          emailController,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Email',
+                                                      ),
+                                                    ),
+                                                    TextField(
+                                                      controller:
+                                                          phoneController,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Phone',
+                                                      ),
+                                                    ),
+                                                    TextField(
+                                                      controller: bioController,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Bio',
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 16),
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      decoration: BoxDecoration(
+                                                        color: ColorResources
+                                                            .primaryMaterial,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                      child: BlocConsumer<
+                                                          ProfileBloc,
+                                                          ProfileState>(
+                                                        listener:
+                                                            (context, state) {
+                                                          state.maybeWhen(
+                                                              orElse: () {},
+                                                              loaded: (data) {
+                                                                context
+                                                                    .read<
+                                                                        ProfileBloc>()
+                                                                    .add(const ProfileEvent
+                                                                        .getProfile());
+                                                              });
+                                                        },
+                                                        builder:
+                                                            (context, state) {
+                                                          return state
+                                                              .maybeWhen(
+                                                            orElse: () {
+                                                              return MaterialButton(
+                                                                onPressed: () {
+                                                                  String name =
+                                                                      nameController
+                                                                          .text;
+                                                                  String email =
+                                                                      emailController
+                                                                          .text;
+                                                                  String phone =
+                                                                      phoneController
+                                                                          .text;
+                                                                  String bio =
+                                                                      bioController
+                                                                          .text;
+
+                                                                  if (name.isNotEmpty ||
+                                                                      email
+                                                                          .isNotEmpty ||
+                                                                      phone
+                                                                          .isNotEmpty ||
+                                                                      bio.isNotEmpty) {
+                                                                    // Memanggil event update profile dari bloc dengan data baru
+                                                                    context
+                                                                        .read<
+                                                                            ProfileBloc>()
+                                                                        .add(ProfileEvent
+                                                                            .updateProfile(
+                                                                          ProfileRequestModel(
+                                                                              name: name,
+                                                                              email: email,
+                                                                              phone: phone,
+                                                                              bio: bio),
+                                                                        ));
+                                                                    context
+                                                                        .read<
+                                                                            ProfileBloc>()
+                                                                        .add(const ProfileEvent
+                                                                            .getProfile());
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  }
+                                                                },
+                                                                child: Text(
+                                                                  'Updates',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           );
                                         },
                                       );
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       "Update Profile",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                      style: poppinsRegular.copyWith(
+                                          color: ColorResources.white),
                                     ),
                                   ),
                                 ),
