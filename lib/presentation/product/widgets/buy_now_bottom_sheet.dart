@@ -255,7 +255,7 @@ class BuyNowBottomSheetState extends State<BuyNowBottomSheet> {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      isBuy: true,
+                      // isBuy: true,
                       buttonText: 'Buy Now',
                       onTap: () {
                         context.read<CheckoutBloc>().add(

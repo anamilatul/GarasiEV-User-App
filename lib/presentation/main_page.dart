@@ -6,6 +6,7 @@ import 'package:flutter_garasi_ev/utils/color_resources.dart';
 // import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../data/datasources/auth_local_datasource.dart';
+import 'auth/login_page.dart';
 import 'home/home_page.dart';
 import 'search/search_page.dart';
 
@@ -36,10 +37,34 @@ class _MainPageState extends State<MainPage> {
     super.initState();
   }
 
+  // onTapItem(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
   onTapItem(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2 || index == 3) {
+      if (token.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                "Sorry, the feature cannot be accessed. Please login first"),
+            backgroundColor: Colors.red,
+          ),
+        );
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      } else {
+        setState(() {
+          _selectedIndex = index;
+        });
+      }
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -63,7 +88,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.description_outlined,
+              Icons.library_books_outlined,
             ),
             label: 'History',
           ),

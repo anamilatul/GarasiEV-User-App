@@ -5,6 +5,7 @@ import 'package:flutter_garasi_ev/data/models/request/order_request_model.dart';
 import 'package:flutter_garasi_ev/utils/costum_themes.dart';
 import 'package:flutter_garasi_ev/utils/price_format.dart';
 import '../../bloc/checkout/checkout_bloc.dart';
+import '../../bloc/profile/profile_bloc.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/images.dart';
@@ -80,21 +81,135 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Shipping Address',
-                          style: poppinsBold.copyWith(
-                              fontSize: Dimensions.fontSizeLarge),
+                        BlocBuilder<ProfileBloc, ProfileState>(
+                          builder: (context, state) {
+                            return state.when(
+                              initial: () {
+                                context
+                                    .read<ProfileBloc>()
+                                    .add(const ProfileEvent.getProfile());
+                                return Container(
+                                  // margin: EdgeInsets.all(10),
+                                  // decoration: BoxDecoration(
+                                  //   color: const Color.fromARGB(
+                                  //       255, 249, 245, 245),
+                                  //   borderRadius: BorderRadius.circular(20),
+                                  //   border: Border.all(
+                                  //     color: const Color.fromARGB(
+                                  //         255, 215, 215, 215),
+                                  //   ),
+                                  // ),
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        title: Text("Nama"),
+                                        subtitle: Text("-"),
+                                      ),
+                                      ListTile(
+                                        title: Text("Nomor Handphone"),
+                                        subtitle: Text("-"),
+                                      ),
+                                      Divider(
+                                        indent: 10,
+                                        endIndent: 10,
+                                        thickness: 2,
+                                        color: Colors.grey[300],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              loading: () => Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              error: (message) {
+                                return Text(message);
+                              },
+                              loaded: (profile) {
+                                return Container(
+                                  // margin: EdgeInsets.all(10),
+                                  // decoration: BoxDecoration(
+                                  //   color: const Color.fromARGB(
+                                  //       255, 249, 245, 245),
+                                  //   borderRadius: BorderRadius.circular(20),
+                                  //   border: Border.all(
+                                  //     color: const Color.fromARGB(
+                                  //         255, 215, 215, 215),
+                                  //   ),
+                                  // ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                            color: ColorResources.red,
+                                          ),
+                                          Text(
+                                            'Shipping Address',
+                                            style: poppinsBold.copyWith(
+                                                fontSize:
+                                                    Dimensions.fontSizeLarge),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 21),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              profile.name,
+                                              style:
+                                                  poppinsRegularLarge.copyWith(
+                                                      fontSize: Dimensions
+                                                          .fontSizeLarge),
+                                            ),
+                                            Text(" | "),
+                                            Text(
+                                              profile.phone ?? "-",
+                                              style:
+                                                  poppinsRegularLarge.copyWith(
+                                                      fontSize: Dimensions
+                                                          .fontSizeLarge),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                         Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: Dimensions.paddingSizeSmall),
-                            child: TextField(
-                              controller: _shoppingAddress,
-                              maxLines: 4,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1))),
-                            )),
+                          padding: EdgeInsets.fromLTRB(
+                              21,
+                              Dimensions.paddingSizeSmall,
+                              0,
+                              Dimensions.paddingSizeSmall),
+                          child: TextField(
+                            controller: _shoppingAddress,
+                            maxLines: 4,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(width: 1),
+                              ),
+                              hintText: "Input Your Address",
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          thickness: 2,
+                          color: Colors.grey[300],
+                        ),
                         Text(
                           'Order Detail',
                           style: poppinsBold.copyWith(
@@ -152,7 +267,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                                 "${listProduct.product.model} ${listProduct.product.type}",
                                                 style: poppinsRegular.copyWith(
                                                     fontSize: Dimensions
-                                                        .fontSizeDefault,
+                                                        .fontSizeLarge,
                                                     color: ColorResources
                                                         .primaryMaterial),
                                                 maxLines: 2,
@@ -163,22 +278,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                               width:
                                                   Dimensions.paddingSizeSmall,
                                             ),
-                                            Text(
-                                              '${listProduct.product.price! * listProduct.quantity}'
-                                                  .priceFormat(),
-                                              style: poppinsSemiBold.copyWith(
-                                                  fontSize:
-                                                      Dimensions.fontSizeLarge),
-                                            ),
                                           ],
                                         ),
                                         const SizedBox(
                                             height: Dimensions
                                                 .marginSizeExtraSmall),
-                                        Row(children: [
-                                          Text('Qty -  ${listProduct.quantity}',
-                                              style: poppinsRegular.copyWith()),
-                                        ]),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${listProduct.product.price!}'
+                                                  .priceFormat(),
+                                              style: poppinsSemiBold.copyWith(
+                                                  fontSize:
+                                                      Dimensions.fontSizeLarge),
+                                            ),
+                                            Text('x ${listProduct.quantity}',
+                                                style:
+                                                    poppinsRegular.copyWith()),
+                                          ],
+                                        ),
                                       ]),
                                 ),
                               ]),
@@ -195,19 +315,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              'Order Summary',
-                              style: poppinsSemiBold.copyWith(
-                                  fontSize: Dimensions.fontSizeLarge),
+                            child: Row(
+                              children: [
+                                Icon(Icons.event_note_outlined),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Payment Details',
+                                  style: poppinsSemiBold.copyWith(
+                                      fontSize: Dimensions.fontSizeLarge),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        // Total bill
                         Container(
                           margin: const EdgeInsets.only(
                               top: Dimensions.paddingSizeSmall),
-                          padding:
-                              const EdgeInsets.all(Dimensions.paddingSizeSmall),
                           color: Theme.of(context).highlightColor,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

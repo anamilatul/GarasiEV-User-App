@@ -21,7 +21,7 @@ class TitleProduct extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Text("${product.model ?? '-'} ${product.type ?? '-'}",
+            child: Text("${product.brand ?? '-'} ${product.model ?? '-'}",
                 style: poppinsBoldLarge.copyWith(
                     fontSize: Dimensions.fontSizeExtraLarge),
                 maxLines: 2),

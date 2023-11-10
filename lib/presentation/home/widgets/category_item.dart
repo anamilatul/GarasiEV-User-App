@@ -46,11 +46,11 @@ class _CategoryItemState extends State<CategoryItem> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color:
-              isClicked ? ColorResources.primaryMaterial : ColorResources.white,
+              isClicked ? ColorResources.white : ColorResources.white, //primary
           border: Border.all(
             color: isClicked
-                ? ColorResources.primaryMaterial
-                : ColorResources.black,
+                ? ColorResources.black
+                : ColorResources.black, //primary
           ),
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraLarge),
         ),
@@ -60,7 +60,8 @@ class _CategoryItemState extends State<CategoryItem> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: isClicked ? ColorResources.white : ColorResources.black,
+            color:
+                isClicked ? ColorResources.black : ColorResources.black, //white
             fontSize: Dimensions.fontSizeSmall,
           ),
         ),

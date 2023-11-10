@@ -39,13 +39,46 @@ class _RegisterPageState extends State<RegisterPage> {
   void addUser() async {
     if (_formKey!.currentState!.validate()) {
       _formKey!.currentState!.save();
-      //execute
-      final model = RegisterRequestModel(
-          name: _nameController.text,
-          email: _emailController.text,
-          password: _passwordController.text);
-      context.read<RegisterBloc>().add(RegisterEvent.register(model));
-      isEmailVerified = true;
+      String name = _nameController.text.trim();
+      String email = _emailController.text.trim();
+      String password = _passwordController.text.trim();
+      String confirmPassword = _confirmPasswordController.text.trim();
+
+      if (name.isEmpty ||
+          email.isEmpty ||
+          password.isEmpty ||
+          confirmPassword.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("all fields are required to be filled in."),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } else if (!email.contains('@')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("The email must contain '@'."),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } else {
+        if (password != confirmPassword) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Password and confirm password not match."),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else {
+          final model = RegisterRequestModel(
+            name: name,
+            email: email,
+            password: password,
+          );
+          context.read<RegisterBloc>().add(RegisterEvent.register(model));
+          isEmailVerified = true;
+        }
+      }
     } else {
       isEmailVerified = false;
     }
@@ -207,10 +240,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: ColorResources.primaryMaterial),
                           ),
                         ),
-                        Icon(
-                          Icons.arrow_forward,
-                          size: 15,
-                          color: Theme.of(context).primaryColor,
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const MainPage()));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward,
+                            size: 15,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         )
                       ],
                     ),

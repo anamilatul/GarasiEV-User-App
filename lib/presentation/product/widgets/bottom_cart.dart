@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_garasi_ev/presentation/custom_widgets/custom_snackbar.dart';
 import '../../../bloc/checkout/checkout_bloc.dart';
+import '../../../data/datasources/auth_local_datasource.dart';
 import '../../../data/models/product_response_model.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
@@ -27,9 +28,16 @@ class _BottomCartState extends State<BottomCart> {
   bool vacationIsOn = false;
   bool temporaryClose = false;
 
+  String token = '';
+
   @override
   void initState() {
     super.initState();
+    AuthLocalDataSource().getToken().then((value) {
+      setState(() {
+        token = value;
+      });
+    });
   }
 
   @override
@@ -56,20 +64,31 @@ class _BottomCartState extends State<BottomCart> {
             flex: 2,
             child: GestureDetector(
               onTap: () {
-                if (vacationIsOn || temporaryClose) {
-                } else {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor:
-                        Theme.of(context).primaryColor.withOpacity(0),
-                    builder: (con) => CartBottomSheet(
-                      product: widget.product,
-                      callback: () {
-                        customSnackBar('', context, isError: false);
-                      },
+                if (token.isEmpty) {
+                  // Token tidak tersedia, tampilkan notifikasi
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          "Sorry, you are not logged in. Please log in first!"),
+                      backgroundColor: Colors.red,
                     ),
                   );
+                } else {
+                  if (vacationIsOn || temporaryClose) {
+                  } else {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor:
+                          Theme.of(context).primaryColor.withOpacity(0),
+                      builder: (con) => CartBottomSheet(
+                        product: widget.product,
+                        callback: () {
+                          customSnackBar('', context, isError: false);
+                        },
+                      ),
+                    );
+                  }
                 }
               },
               child: const Icon(
@@ -141,30 +160,31 @@ class _BottomCartState extends State<BottomCart> {
             flex: 11,
             child: InkWell(
               onTap: () {
-                // context.read<CheckoutBloc>().add(
-                //       CheckoutEvent.addToCart(widget.product, 1),
-                //     );
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => CheckoutPage(),
-                //   ),
-                // );
-
-                if (vacationIsOn || temporaryClose) {
-                } else {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor:
-                        Theme.of(context).primaryColor.withOpacity(0),
-                    builder: (con) => BuyNowBottomSheet(
-                      product: widget.product,
-                      callback: () {
-                        customSnackBar('', context, isError: false);
-                      },
+                if (token.isEmpty) {
+                  // Token tidak tersedia, tampilkan notifikasi
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          "Sorry, you are not logged in. Please log in first!"),
+                      backgroundColor: Colors.red,
                     ),
                   );
+                } else {
+                  if (vacationIsOn || temporaryClose) {
+                  } else {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor:
+                          Theme.of(context).primaryColor.withOpacity(0),
+                      builder: (con) => BuyNowBottomSheet(
+                        product: widget.product,
+                        callback: () {
+                          customSnackBar('', context, isError: false);
+                        },
+                      ),
+                    );
+                  }
                 }
               },
               child: Container(

@@ -23,9 +23,9 @@ class _AccountPageState extends State<AccountPage> {
   TextEditingController bioController = TextEditingController();
   @override
   void initState() {
+    _formKey = GlobalKey<FormState>();
     // context.read<ProfileBloc>().add(const ProfileEvent.getProfile());
     super.initState();
-    _formKey = GlobalKey<FormState>();
   }
 
   @override
@@ -69,6 +69,7 @@ class _AccountPageState extends State<AccountPage> {
                       context
                           .read<LogoutBloc>()
                           .add(const LogoutEvent.logout());
+                      // AuthLocalDataSource().removeAuth();
                     },
                     icon: Icon(
                       Icons.logout_outlined,
@@ -305,7 +306,7 @@ class _AccountPageState extends State<AccountPage> {
                                       nameController.text = profile.name;
                                       emailController.text = profile.email;
                                       phoneController.text =
-                                          profile.phone ?? '';
+                                          profile.phone ?? "";
                                       bioController.text = profile.bio ?? '';
                                       showModalBottomSheet(
                                         isScrollControlled: true,
@@ -368,10 +369,12 @@ class _AccountPageState extends State<AccountPage> {
                                                     TextField(
                                                       controller:
                                                           phoneController,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText: 'Phone',
-                                                      ),
+                                                      // decoration:
+                                                      //     InputDecoration(
+                                                      //   labelText: 'Phone',
+                                                      // ),
+                                                      keyboardType:
+                                                          TextInputType.phone,
                                                     ),
                                                     TextField(
                                                       controller: bioController,

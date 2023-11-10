@@ -81,7 +81,7 @@ class ProductItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("${product.model ?? '-'} ${product.type ?? '-'}",
+                  Text("${product.brand ?? '-'} ${product.model ?? '-'}",
                       textAlign: TextAlign.center,
                       style: poppinsRegular.copyWith(
                           fontSize: Dimensions.fontSizeDefault,

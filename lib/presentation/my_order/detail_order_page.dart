@@ -3,7 +3,9 @@ import 'package:flutter_garasi_ev/presentation/my_order/widget/card_detail_order
 import 'package:flutter_garasi_ev/utils/price_format.dart';
 
 import '../../data/models/my_order_response_model.dart';
+import '../../utils/color_resources.dart';
 import '../../utils/costum_themes.dart';
+import '../../utils/dimensions.dart';
 
 class DetailOrderPage extends StatelessWidget {
   final Order order;
@@ -61,35 +63,84 @@ class DetailOrderPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Detail Order"),
+                  Text(
+                    "Detail Order",
+                    style: poppinsBold.copyWith(
+                        fontSize: Dimensions.fontSizeExtraLarge,
+                        color: ColorResources.red),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Shipping Address',
+                    style: poppinsBold.copyWith(
+                        fontSize: Dimensions.fontSizeDefault),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      "${order.deliveryAddress}",
+                      maxLines: 1,
+                      style: poppinsRegular.copyWith(
+                          fontSize: Dimensions.fontSizeDefault),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Order Number"),
-                      Text(" ${order.number}"),
+                      Text(
+                        "Order Number",
+                        style: poppinsBold.copyWith(
+                            fontSize: Dimensions.fontSizeDefault),
+                      ),
+                      Text(
+                        " ${order.number}",
+                        style: poppinsBold.copyWith(
+                            fontSize: Dimensions.fontSizeDefault),
+                      ),
                     ],
                   ),
                   for (var item in order.orderItems)
                     Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10, bottom: 3),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                              "• ${item.product.brand} ${item.product.model} x ${item.quantity}"),
+                            "• ${item.product.brand} ${item.product.model} x ${item.quantity}",
+                            style: poppinsRegular.copyWith(
+                                fontSize: Dimensions.fontSizeDefault),
+                          ),
                           Text(
                             "${item.product.price * item.quantity}"
                                 .priceFormat(),
+                            style: poppinsRegular.copyWith(
+                                fontSize: Dimensions.fontSizeDefault),
                           ),
                         ],
                       ),
                     ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Total"),
+                      Text(
+                        "Total",
+                        style: poppinsBold.copyWith(
+                            fontSize: Dimensions.fontSizeExtraLarge),
+                      ),
                       Text(
                         '${order.totalPrice}'.priceFormat(),
+                        style: poppinsBold.copyWith(
+                            fontSize: Dimensions.fontSizeExtraLarge),
                       ),
                     ],
                   ),

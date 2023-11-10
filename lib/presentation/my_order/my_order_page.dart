@@ -79,8 +79,10 @@ class _MyOrderPageState extends State<MyOrderPage>
           BlocBuilder<MyOrderBloc, MyOrderState>(
             builder: (context, state) {
               return state.when(
-                initial: () => CircularProgressIndicator.adaptive(),
-                loading: () => CircularProgressIndicator.adaptive(),
+                initial: () =>
+                    Center(child: CircularProgressIndicator.adaptive()),
+                loading: () =>
+                    Center(child: CircularProgressIndicator.adaptive()),
                 error: (error) => Center(child: Text(error)),
                 loaded: (data) => _buildProcessedTab(data),
               );
@@ -89,8 +91,10 @@ class _MyOrderPageState extends State<MyOrderPage>
           BlocBuilder<MyOrderBloc, MyOrderState>(
             builder: (context, state) {
               return state.when(
-                initial: () => CircularProgressIndicator.adaptive(),
-                loading: () => CircularProgressIndicator.adaptive(),
+                initial: () =>
+                    Center(child: CircularProgressIndicator.adaptive()),
+                loading: () =>
+                    Center(child: CircularProgressIndicator.adaptive()),
                 error: (error) => Center(child: Text(error)),
                 loaded: (data) => _buildFinishedTab(data),
               );

@@ -16,11 +16,9 @@ class AmountWidget extends StatelessWidget {
           vertical: Dimensions.paddingSizeExtraSmall),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(title!,
-            style:
-                poppinsRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+            style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeLarge)),
         Text(amount,
-            style:
-                poppinsRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+            style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeLarge)),
       ]),
     );
   }

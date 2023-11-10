@@ -29,13 +29,13 @@ class _SearchBrandState extends State<SearchBrand> {
       return productBrand.contains(brand);
     }).toList();
 
-    // if (searchResults.isEmpty) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text('Tidak ada produk dengan merek "$brand".'),
-    //     ),
-    //   );
-    // }
+    if (searchResults.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Tidak ada produk dengan merek "$brand".'),
+        ),
+      );
+    }
     if (searchResults.isEmpty) {
       setState(() {
         noResults = true;
@@ -45,6 +45,12 @@ class _SearchBrandState extends State<SearchBrand> {
     }
 
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -77,40 +83,53 @@ class _SearchBrandState extends State<SearchBrand> {
           ),
         ),
         actions: [
-          // IconButton(
-          //   padding: const EdgeInsets.only(right: 20),
-          //   icon: const Icon(
-          //     Icons.clear,
-          //     size: 20,
-          //     color: ColorResources.black,
-          //   ),
-          //   onPressed: () {
-          //     _searchController.clear();
-          //     setState(() {
-          //       searchResults.clear();
-          //     });
-          //   },
-          // ),
           IconButton(
+            padding: const EdgeInsets.only(right: 20),
             icon: const Icon(
-              Icons.search,
+              Icons.clear,
               size: 20,
-              color: ColorResources.black,
+              color: ColorResources.red,
             ),
             onPressed: () {
-              BlocProvider.of<ProductBloc>(context).state.maybeWhen(
-                    orElse: () {},
-                    loaded: (model) {
-                      performSearchByBrand(model.data ?? []);
-                    },
-                  );
+              _searchController.clear();
+              setState(() {
+                searchResults.clear();
+              });
             },
+          ),
+          Container(
+            decoration: BoxDecoration(color: ColorResources.primaryMaterial),
+            child: IconButton(
+              icon: const Icon(
+                Icons.search,
+                size: 20,
+                color: ColorResources.white,
+              ),
+              onPressed: () {
+                BlocProvider.of<ProductBloc>(context).state.maybeWhen(
+                      orElse: () {},
+                      loaded: (model) {
+                        performSearchByBrand(model.data ?? []);
+                      },
+                    );
+              },
+            ),
           ),
         ],
       ),
-      body: noResults
+      body: searchResults.isEmpty
           ? Center(
-              child: Text('Tidak ada produk yang sesuai'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.no_backpack_outlined),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Nothing product to show'),
+                ],
+              ),
             )
           : ListView(
               children: [

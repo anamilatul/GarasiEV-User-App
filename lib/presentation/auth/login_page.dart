@@ -50,7 +50,12 @@ class _LoginPageState extends State<LoginPage> {
       String email = _emailController!.text.trim();
       String password = _passwordController!.text.trim();
 
-      if (email.isEmpty) {
+      if (email.isEmpty && password.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Email and Password Can't be Empty"),
+          backgroundColor: Colors.red,
+        ));
+      } else if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Email Can't be Empty"),
           backgroundColor: Colors.red,
@@ -126,33 +131,33 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _passwordController,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          right: Dimensions.marginSizeSmall,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  checkColor: ColorResources.white,
-                                  activeColor: Theme.of(context).primaryColor,
-                                  value: false,
-                                  onChanged: (val) {},
-                                ),
-                                const Text('Remember', style: poppinsRegular),
-                              ],
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: Text('Forgot Password',
-                                  style: poppinsRegular.copyWith(
-                                      color: ColorResources.lightSkyBlue)),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   margin: const EdgeInsets.only(
+                      //     right: Dimensions.marginSizeSmall,
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Row(
+                      //         children: [
+                      //           Checkbox(
+                      //             checkColor: ColorResources.white,
+                      //             activeColor: Theme.of(context).primaryColor,
+                      //             value: false,
+                      //             onChanged: (val) {},
+                      //           ),
+                      //           const Text('Remember', style: poppinsRegular),
+                      //         ],
+                      //       ),
+                      //       InkWell(
+                      //         onTap: () {},
+                      //         child: Text('Forgot Password',
+                      //             style: poppinsRegular.copyWith(
+                      //                 color: ColorResources.lightSkyBlue)),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 20),
                         child: BlocConsumer<LoginBloc, LoginState>(
@@ -221,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const SizedBox(
-                        height: Dimensions.marginSizeAuthSmall,
+                        height: 100,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

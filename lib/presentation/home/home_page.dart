@@ -11,6 +11,7 @@ import '../../data/models/auth_response_model.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/images.dart';
+import '../auth/login_page.dart';
 import '../cart/cart_page.dart';
 import 'widgets/banner.dart';
 import 'widgets/category_item.dart';
@@ -33,18 +34,18 @@ class _HomePageState extends State<HomePage> {
     context.read<CategoryBloc>().add(const CategoryEvent.getCategory());
 
     super.initState();
-    loadUserName();
+    // loadUserName();
   }
 
-  String username = "";
-  Future<void> loadUserName() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final authJson = preferences.getString('auth') ?? '';
-    final authModel = AuthResponseModel.fromJson(authJson);
-    setState(() {
-      username = authModel.user.name; // Set nama pengguna ke dalam state
-    });
-  }
+  // String username = "";
+  // Future<void> loadUserName() async {
+  //   final SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   final authJson = preferences.getString('auth') ?? '';
+  //   final authModel = AuthResponseModel.fromJson(authJson);
+  //   setState(() {
+  //     username = authModel.user.name; // Set nama pengguna ke dalam state
+  //   });
+  // }
 
   // Future<void> _loadData(bool reload) async {}
 
@@ -84,11 +85,31 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => const CartPage()),
-                          );
+                        onPressed: () async {
+                          // Cek apakah token tersedia
+                          final SharedPreferences preferences =
+                              await SharedPreferences.getInstance();
+                          final String? authJson =
+                              preferences.getString('auth');
+                          if (authJson != null && authJson.isNotEmpty) {
+                            // Token tersedia, navigasi ke halaman Cart
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => const CartPage()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    "Sorry, the feature cannot be accessed. You must login now!"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                            );
+                          }
                         },
                         icon: Stack(clipBehavior: Clip.none, children: [
                           const Icon(
@@ -314,8 +335,8 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child:
-                                    Text('Recomendation', style: titleHeader),
+                                child: Text('Recomended for you',
+                                    style: titleHeader),
                               ),
                               InkWell(
                                 onTap: () {

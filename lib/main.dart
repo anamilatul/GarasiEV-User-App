@@ -13,6 +13,7 @@ import 'bloc/logout/logout_bloc.dart';
 import 'bloc/product/product_bloc.dart';
 import 'bloc/register/register_bloc.dart';
 import 'presentation/auth/login_page.dart';
+import 'presentation/splash/splash_page.dart';
 import 'utils/light_themes.dart';
 
 void main() {
@@ -73,7 +74,7 @@ class MyApp extends StatelessWidget {
             } else if (snapshot.hasData && snapshot.data!) {
               return const MainPage();
             } else {
-              return const LoginPage();
+              return const SplashPage();
             }
           },
         ),

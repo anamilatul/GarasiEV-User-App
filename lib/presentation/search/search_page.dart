@@ -57,163 +57,332 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   @override
+  void dispose() {
+    weightController.dispose();
+    rangeController.dispose();
+    speedController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Custom Produk ',
-          style: poppinsRegular.copyWith(fontSize: 20, color: Colors.black),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 1,
-        backgroundColor: Colors.white,
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Custom Produk ',
+      //     style: poppinsRegular.copyWith(fontSize: 20, color: Colors.black),
+      //   ),
+      //   automaticallyImplyLeading: false,
+      //   elevation: 1,
+      //   backgroundColor: Colors.white,
+      // ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          hintText: 'Berat Badan Driver (kg)',
-                          focusNode: _weightNode,
-                          nextNode: _rangeNode,
-                          textInputType: TextInputType.number,
-                          controller: weightController,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        CustomTextField(
-                          hintText: 'Jarak',
-                          focusNode: _rangeNode,
-                          nextNode: _speedeNode,
-                          textInputType: TextInputType.number,
-                          controller: rangeController,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        CustomTextField(
-                          hintText: 'Kecepatan',
-                          focusNode: _speedeNode,
-                          textInputType: TextInputType.number,
-                          controller: speedController,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomButton(
-                            onTap: () {
-                              // performSearch(products);
-                            },
-                            buttonText: "Find"),
-                      ],
+                    padding: const EdgeInsets.only(top: 8.0, left: 16),
+                    child: Text(
+                      'Find Product ',
+                      style: poppinsRegular.copyWith(
+                          fontSize: 20, color: ColorResources.primaryMaterial),
                     ),
                   ),
-                  // Expanded(
-                  //   child: ListView(
-                  //     children: [
-                  //       MasonryGridView.count(
-                  //         padding: const EdgeInsets.symmetric(
-                  //             horizontal: Dimensions.paddingSizeSmall),
-                  //         physics: const BouncingScrollPhysics(),
-                  //         crossAxisCount: 2,
-                  //         mainAxisSpacing: 6,
-                  //         crossAxisSpacing: 8,
-                  //         itemCount: searchResults.length,
-                  //         shrinkWrap: true,
-                  //         itemBuilder: (BuildContext context, int index) {
-                  //           return ProductItem(product: searchResults[index]);
-                  //         },
-                  //       ),
-                  //     ],
-                  //   ),
+                  // SizedBox(
+                  //   height: 8,
                   // ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: ColorResources.homeBg,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.4),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              hintText: 'Berat Badan Driver (kg)',
+                              focusNode: _weightNode,
+                              nextNode: _rangeNode,
+                              textInputType: TextInputType.number,
+                              controller: weightController,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CustomTextField(
+                              hintText: 'Jarak',
+                              focusNode: _rangeNode,
+                              nextNode: _speedeNode,
+                              textInputType: TextInputType.number,
+                              controller: rangeController,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CustomTextField(
+                              hintText: 'Kecepatan',
+                              focusNode: _speedeNode,
+                              textInputType: TextInputType.number,
+                              controller: speedController,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CustomButton(
+                                onTap: () {
+                                  // performSearch(products);
+                                },
+                                buttonText: "Find"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               );
             },
             loading: () {
-              return Center(
-                child: CircularProgressIndicator(),
+              // return Center(
+              //   child: CircularProgressIndicator(),
+              // );
+              return SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 16),
+                      child: Text(
+                        'Find Product ',
+                        style: poppinsRegular.copyWith(
+                            fontSize: 20,
+                            color: ColorResources.primaryMaterial),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   height: 8,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorResources.homeBg,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              CustomTextField(
+                                hintText: 'Berat Badan Driver (kg)',
+                                focusNode: _weightNode,
+                                nextNode: _rangeNode,
+                                textInputType: TextInputType.number,
+                                controller: weightController,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CustomTextField(
+                                hintText: 'Jarak',
+                                focusNode: _rangeNode,
+                                nextNode: _speedeNode,
+                                textInputType: TextInputType.number,
+                                controller: rangeController,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CustomTextField(
+                                hintText: 'Kecepatan',
+                                focusNode: _speedeNode,
+                                textInputType: TextInputType.number,
+                                controller: speedController,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomButton(
+                                  onTap: () {
+                                    // performSearch(products);
+                                  },
+                                  buttonText: "Find"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
             loaded: (model) {
               final products = model.data ?? [];
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        // Text(
-                        //   "Here you can search for Garasi EV products, \naccording to what you need !",
-                        //   style: poppinsRegular.copyWith(fontSize: 15, color: Colors.black),
-                        // ),
-                        // SizedBox(
-                        //   height: 10,
-                        // ),
-                        CustomTextField(
-                          hintText: 'Berat Badan Driver (kg)',
-                          focusNode: _weightNode,
-                          nextNode: _rangeNode,
-                          textInputType: TextInputType.number,
-                          controller: weightController,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        CustomTextField(
-                          hintText: 'Jarak',
-                          focusNode: _rangeNode,
-                          nextNode: _speedeNode,
-                          textInputType: TextInputType.number,
-                          controller: rangeController,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        CustomTextField(
-                          hintText: 'Kecepatan',
-                          focusNode: _speedeNode,
-                          textInputType: TextInputType.number,
-                          controller: speedController,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomButton(
-                            onTap: () {
-                              performSearch(products);
-                            },
-                            buttonText: "Find"),
-                      ],
+              return SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Text(
+                    //   "Here you can search for Garasi EV products, \naccording to what you need !",
+                    //   style: poppinsRegular.copyWith(
+                    //       fontSize: 15, color: Colors.black),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 16),
+                      child: Text(
+                        'Find Product ',
+                        style: poppinsRegular.copyWith(
+                            fontSize: 20,
+                            color: ColorResources.primaryMaterial),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        MasonryGridView.count(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: Dimensions.paddingSizeSmall),
-                          physics: const BouncingScrollPhysics(),
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 6,
-                          crossAxisSpacing: 8,
-                          itemCount: searchResults.length,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ProductItem(product: searchResults[index]);
-                          },
+                    // SizedBox(
+                    //   height: 8,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorResources.homeBg,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              CustomTextField(
+                                hintText: 'Berat Badan Driver (kg)',
+                                focusNode: _weightNode,
+                                nextNode: _rangeNode,
+                                textInputType: TextInputType.number,
+                                controller: weightController,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CustomTextField(
+                                hintText: 'Jarak',
+                                focusNode: _rangeNode,
+                                nextNode: _speedeNode,
+                                textInputType: TextInputType.number,
+                                controller: rangeController,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CustomTextField(
+                                hintText: 'Kecepatan',
+                                focusNode: _speedeNode,
+                                textInputType: TextInputType.number,
+                                controller: speedController,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomButton(
+                                  onTap: () {
+                                    if (weightController.text.isEmpty ||
+                                        rangeController.text.isEmpty ||
+                                        speedController.text.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'You must complited all the field',
+                                          ),
+                                          backgroundColor: ColorResources.red,
+                                        ),
+                                      );
+                                    } else {
+                                      performSearch(products);
+                                    }
+                                  },
+                                  buttonText: "Find"),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: searchResults.isEmpty
+                          ? Center(
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.no_backpack_outlined,
+                                  color: Colors.grey,
+                                ),
+                                Text(
+                                  "Nothing product to show",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ))
+                          : ListView(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Result",
+                                    style: poppinsBoldLarge.copyWith(
+                                        fontSize: Dimensions.fontSizeLarge),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                MasonryGridView.count(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: Dimensions.paddingSizeSmall),
+                                  physics: const BouncingScrollPhysics(),
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 6,
+                                  crossAxisSpacing: 8,
+                                  itemCount: searchResults.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ProductItem(
+                                        product: searchResults[index]);
+                                  },
+                                ),
+                              ],
+                            ),
+                    ),
+                  ],
+                ),
               );
             },
             error: (message) {
@@ -224,17 +393,17 @@ class _SearchPageState extends State<SearchPage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorResources.primaryMaterial,
-        onPressed: () {
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => const ScanScreen()));
-        },
-        child: const Icon(
-          Icons.qr_code_scanner,
-          color: ColorResources.white,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: ColorResources.primaryMaterial,
+      //   onPressed: () {
+      //     // Navigator.push(context,
+      //     //     MaterialPageRoute(builder: (context) => const ScanScreen()));
+      //   },
+      //   child: const Icon(
+      //     Icons.qr_code_scanner,
+      //     color: ColorResources.white,
+      //   ),
+      // ),
     );
   }
 }

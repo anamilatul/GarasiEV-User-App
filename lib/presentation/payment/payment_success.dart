@@ -18,8 +18,8 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
         context: context,
         dialogType: DialogType.success,
         animType: AnimType.rightSlide,
-        title: 'Pembayaran Sukses',
-        desc: 'Selamat Pembayaran Berhasil dilakukan',
+        title: 'Payment Success',
+        desc: 'Congratulations, payment has been made successfully',
         btnOkOnPress: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const MainPage();

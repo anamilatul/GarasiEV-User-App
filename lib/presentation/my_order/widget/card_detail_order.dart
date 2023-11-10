@@ -136,12 +136,19 @@ class CardDetailOrder extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(name),
+                    Text(
+                      name,
+                      style: poppinsRegular.copyWith(
+                          fontSize: Dimensions.fontSizeDefault),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
                       price,
+                      style: poppinsRegular.copyWith(
+                          color: ColorResources.red,
+                          fontSize: Dimensions.fontSizeDefault),
                     ),
                     const SizedBox(
                       height: 10,
@@ -149,8 +156,16 @@ class CardDetailOrder extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Quantity"),
-                        Text(quantity),
+                        Text(
+                          "Quantity",
+                          style: poppinsRegular.copyWith(
+                              fontSize: Dimensions.fontSizeDefault),
+                        ),
+                        Text(
+                          quantity,
+                          style: poppinsRegular.copyWith(
+                              fontSize: Dimensions.fontSizeLarge),
+                        ),
                       ],
                     ),
                   ],
@@ -164,7 +179,7 @@ class CardDetailOrder extends StatelessWidget {
           if (showDivider)
             const Divider(
               thickness: 1,
-              color: ColorResources.primaryMaterial,
+              color: Colors.grey,
             ),
         ],
       ),
