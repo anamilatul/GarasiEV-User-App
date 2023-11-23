@@ -37,4 +37,21 @@ class AuthLocalDataSource {
       return -1;
     }
   }
+  // Future<int> getUserId() async {
+  //   final SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   final authJson = preferences.getString('auth') ?? '';
+
+  //   if (authJson.isNotEmpty) {
+  //     final authModel = AuthResponseModel.fromJson(authJson);
+
+  //     if (authModel.user != null) {
+  //       return authModel.user.id ??
+  //           -1; // Menggunakan nilai default -1 jika id null
+  //     } else {
+  //       return -1;
+  //     }
+  //   } else {
+  //     return -1;
+  //   }
+  // }
 }

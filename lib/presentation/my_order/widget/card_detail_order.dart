@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:flutter_garasi_ev/utils/price_format.dart';
-
 import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';

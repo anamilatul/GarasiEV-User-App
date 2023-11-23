@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../bloc/checkout/checkout_bloc.dart';
 import '../../bloc/product/product_bloc.dart';
-import '../../data/models/auth_response_model.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/images.dart';

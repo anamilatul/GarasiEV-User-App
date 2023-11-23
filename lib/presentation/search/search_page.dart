@@ -49,9 +49,9 @@ class _SearchPageState extends State<SearchPage> {
         ),
       );
     }
-    weightController.clear();
-    rangeController.clear();
-    speedController.clear();
+    // weightController.clear();
+    // rangeController.clear();
+    // speedController.clear();
 
     setState(() {});
   }
@@ -86,7 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, left: 16),
                     child: Text(
-                      'Find Product ',
+                      'SmartMatch',
                       style: poppinsRegular.copyWith(
                           fontSize: 20, color: ColorResources.primaryMaterial),
                     ),
@@ -166,7 +166,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, left: 16),
                       child: Text(
-                        'Find Product ',
+                        'SmartMatch',
                         style: poppinsRegular.copyWith(
                             fontSize: 20,
                             color: ColorResources.primaryMaterial),
@@ -195,7 +195,7 @@ class _SearchPageState extends State<SearchPage> {
                           child: Column(
                             children: [
                               CustomTextField(
-                                hintText: 'Berat Badan Driver (kg)',
+                                hintText: 'Wweight Driver (kg)',
                                 focusNode: _weightNode,
                                 nextNode: _rangeNode,
                                 textInputType: TextInputType.number,
@@ -205,7 +205,7 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 5,
                               ),
                               CustomTextField(
-                                hintText: 'Jarak',
+                                hintText: 'Range',
                                 focusNode: _rangeNode,
                                 nextNode: _speedeNode,
                                 textInputType: TextInputType.number,
@@ -215,7 +215,7 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 5,
                               ),
                               CustomTextField(
-                                hintText: 'Kecepatan',
+                                hintText: 'Speed',
                                 focusNode: _speedeNode,
                                 textInputType: TextInputType.number,
                                 controller: speedController,
@@ -243,15 +243,10 @@ class _SearchPageState extends State<SearchPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   "Here you can search for Garasi EV products, \naccording to what you need !",
-                    //   style: poppinsRegular.copyWith(
-                    //       fontSize: 15, color: Colors.black),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, left: 16),
                       child: Text(
-                        'Find Product ',
+                        'SmartMatch',
                         style: poppinsRegular.copyWith(
                             fontSize: 20,
                             color: ColorResources.primaryMaterial),
@@ -280,7 +275,7 @@ class _SearchPageState extends State<SearchPage> {
                           child: Column(
                             children: [
                               CustomTextField(
-                                hintText: 'Berat Badan Driver (kg)',
+                                hintText: 'Weight Driver (kg)',
                                 focusNode: _weightNode,
                                 nextNode: _rangeNode,
                                 textInputType: TextInputType.number,
@@ -290,7 +285,7 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 5,
                               ),
                               CustomTextField(
-                                hintText: 'Jarak',
+                                hintText: 'Range',
                                 focusNode: _rangeNode,
                                 nextNode: _speedeNode,
                                 textInputType: TextInputType.number,
@@ -300,7 +295,7 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 5,
                               ),
                               CustomTextField(
-                                hintText: 'Kecepatan',
+                                hintText: 'Speed',
                                 focusNode: _speedeNode,
                                 textInputType: TextInputType.number,
                                 controller: speedController,

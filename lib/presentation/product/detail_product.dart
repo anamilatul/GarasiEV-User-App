@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_garasi_ev/utils/price_format.dart';
 import '../../data/models/product_response_model.dart';
-import '../../utils/color_resources.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
 import '../custom_widgets/rating_bar.dart';
 import 'widgets/bottom_cart.dart';
 import 'widgets/image_product.dart';
-import 'widgets/spesification_product.dart';
 import 'widgets/title_product.dart';
 
 class DetailProduct extends StatefulWidget {
@@ -258,7 +255,7 @@ class _DetailProductState extends State<DetailProduct> {
                                           child: Container(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                                '${widget.product.waterproof}'),
+                                                '${widget.product.waterproof ?? ''} '),
                                           ),
                                         ),
                                       ],

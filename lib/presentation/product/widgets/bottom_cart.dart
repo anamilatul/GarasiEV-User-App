@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_garasi_ev/presentation/auth/login_page.dart';
 import 'package:flutter_garasi_ev/presentation/custom_widgets/custom_snackbar.dart';
-import '../../../bloc/checkout/checkout_bloc.dart';
 import '../../../data/datasources/auth_local_datasource.dart';
 import '../../../data/models/product_response_model.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
-import '../../cart/cart_page.dart';
-import '../../checkout/checkout_page.dart';
+
 import 'buy_now_bottom_sheet.dart';
 import 'cart_bottom_sheet.dart';
-import '../../custom_widgets/button/custom_button.dart';
 
 class BottomCart extends StatefulWidget {
   final Product product;
@@ -73,6 +70,8 @@ class _BottomCartState extends State<BottomCart> {
                       backgroundColor: Colors.red,
                     ),
                   );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 } else {
                   if (vacationIsOn || temporaryClose) {
                   } else {
@@ -169,6 +168,8 @@ class _BottomCartState extends State<BottomCart> {
                       backgroundColor: Colors.red,
                     ),
                   );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 } else {
                   if (vacationIsOn || temporaryClose) {
                   } else {

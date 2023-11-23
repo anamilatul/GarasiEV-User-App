@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_garasi_ev/presentation/product/category_product_page.dart';
 import '../../../data/models/category_response_model.dart';
 import '../../../utils/color_resources.dart';
-import '../../../utils/costum_themes.dart';
 import '../../../utils/dimensions.dart';
 
 class CategoryItem extends StatefulWidget {

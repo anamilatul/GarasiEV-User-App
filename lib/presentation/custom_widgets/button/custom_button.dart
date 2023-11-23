@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
-import 'package:flutter_garasi_ev/utils/costum_themes.dart';
-import '../../../../utils/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   final Function? onTap;

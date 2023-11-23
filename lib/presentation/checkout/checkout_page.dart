@@ -266,10 +266,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                               child: Text(
                                                 "${listProduct.product.model} ${listProduct.product.type}",
                                                 style: poppinsRegular.copyWith(
-                                                    fontSize: Dimensions
-                                                        .fontSizeLarge,
-                                                    color: ColorResources
-                                                        .primaryMaterial),
+                                                  fontSize:
+                                                      Dimensions.fontSizeLarge,
+                                                ),
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -308,11 +307,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         Container(
                           height: 35,
                           width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(.055),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   color: Theme.of(context)
+                          //       .primaryColor
+                          //       .withOpacity(.055),
+                          // ),
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Row(

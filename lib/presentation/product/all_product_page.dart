@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 import '../../bloc/product/product_bloc.dart';
@@ -21,7 +20,7 @@ class _AllProductPageState extends State<AllProductPage> {
   void initState() {
     super.initState();
     context.read<ProductBloc>().add(
-          const ProductEvent.getAll(), // Ganti ini dengan event yang sesuai
+          const ProductEvent.getAll(),
         );
   }
 
@@ -39,7 +38,7 @@ class _AllProductPageState extends State<AllProductPage> {
             ),
           ),
           const SizedBox(width: Dimensions.paddingSizeSmall),
-          Text('All Products', // Ganti ini dengan judul yang sesuai
+          Text('All Products',
               style:
                   poppinsRegular.copyWith(fontSize: 20, color: Colors.black)),
         ]),

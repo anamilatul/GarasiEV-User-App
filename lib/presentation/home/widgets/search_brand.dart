@@ -134,9 +134,7 @@ class _SearchBrandState extends State<SearchBrand> {
           : ListView(
               children: [
                 MasonryGridView.count(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.paddingSizeSmall,
-                  ),
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                   physics: const BouncingScrollPhysics(),
                   crossAxisCount: 2,
                   mainAxisSpacing: 6,

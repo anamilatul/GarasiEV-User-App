@@ -12,7 +12,6 @@ import 'bloc/login/login_bloc.dart';
 import 'bloc/logout/logout_bloc.dart';
 import 'bloc/product/product_bloc.dart';
 import 'bloc/register/register_bloc.dart';
-import 'presentation/auth/login_page.dart';
 import 'presentation/splash/splash_page.dart';
 import 'utils/light_themes.dart';
 

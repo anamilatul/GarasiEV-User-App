@@ -110,7 +110,7 @@ class _MyOrderPageState extends State<MyOrderPage>
         data.data.where((order) => order.orderStatus == 'ordered').toList();
 
     if (orderedOrders.isEmpty) {
-      return _listIsEmpty();
+      return _listIsEmpty(tabIndex: 0);
     }
 
     return ListView.builder(
@@ -146,7 +146,7 @@ class _MyOrderPageState extends State<MyOrderPage>
         data.data.where((order) => order.orderStatus == 'processed').toList();
 
     if (processedOrders.isEmpty) {
-      return _listIsEmpty();
+      return _listIsEmpty(tabIndex: 1);
     }
 
     return ListView.builder(
@@ -183,7 +183,7 @@ class _MyOrderPageState extends State<MyOrderPage>
         data.data.where((order) => order.orderStatus == 'finished').toList();
 
     if (finishedOrders.isEmpty) {
-      return _listIsEmpty();
+      return _listIsEmpty(tabIndex: 2);
     }
 
     return ListView.builder(
@@ -202,8 +202,28 @@ class _MyOrderPageState extends State<MyOrderPage>
               // Navigasi ke halaman detail pesanan
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => DetailOrderPage(order: order),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return DetailOrderPage(order: order);
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = 0.0;
+                    const end = 1.0;
+                    const curve = Curves.easeInOut;
+
+                    var tween = Tween(begin: begin, end: end).chain(
+                      CurveTween(curve: curve),
+                    );
+
+                    var scaleAnimation = animation.drive(tween);
+
+                    return ScaleTransition(
+                      scale: scaleAnimation,
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 500),
                 ),
               );
             },
@@ -215,23 +235,63 @@ class _MyOrderPageState extends State<MyOrderPage>
     );
   }
 
-  Widget _listIsEmpty() {
+  // Widget _listIsEmpty() {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: const [
+  //         Icon(
+  //           Icons.bike_scooter_outlined,
+  //           color: Colors.grey,
+  //         ),
+  //         SizedBox(
+  //           height: 5,
+  //         ),
+  //         Text(
+  //           'You have not ordered anything yet',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+  Widget _listIsEmpty({required int tabIndex}) {
+    String tabText;
+    switch (tabIndex) {
+      case 0:
+        tabText = 'ordered';
+        break;
+      case 1:
+        tabText = 'processed';
+        break;
+      case 2:
+        tabText = 'finished';
+        break;
+      default:
+        tabText = 'Unknown';
+    }
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Icon(
             Icons.bike_scooter_outlined,
             color: Colors.grey,
           ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            'You have not ordered anything yet',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
+          const SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: Text(
+              "You haven't $tabText product",
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],

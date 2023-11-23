@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(
               Icons.electric_scooter,
             ),
-            label: 'Find',
+            label: 'SmartMatch',
           ),
           BottomNavigationBarItem(
             icon: Icon(

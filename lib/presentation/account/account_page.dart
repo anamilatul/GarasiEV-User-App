@@ -110,9 +110,10 @@ class _AccountPageState extends State<AccountPage> {
                         padding: const EdgeInsets.only(top: 10),
                         child: Center(
                           child: const CircleAvatar(
+                            backgroundColor: Colors.white,
                             radius: 50,
                             backgroundImage: AssetImage(
-                              "assets/images/profile.png",
+                              "assets/images/profile2.png",
                             ),
                           ),
                         ),
@@ -334,7 +335,10 @@ class _AccountPageState extends State<AccountPage> {
                                                     Row(
                                                       children: [
                                                         InkWell(
-                                                          onTap: () {},
+                                                          onTap: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
                                                           child: Icon(
                                                             Icons.arrow_back,
                                                           ),
@@ -369,10 +373,10 @@ class _AccountPageState extends State<AccountPage> {
                                                     TextField(
                                                       controller:
                                                           phoneController,
-                                                      // decoration:
-                                                      //     InputDecoration(
-                                                      //   labelText: 'Phone',
-                                                      // ),
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Phone',
+                                                      ),
                                                       keyboardType:
                                                           TextInputType.phone,
                                                     ),

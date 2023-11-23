@@ -158,7 +158,7 @@ class CartPageState extends State<CartPage> {
                           ? Container(
                               width: MediaQuery.of(context).size.width / 3.5,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColorLight,
+                                color: Color.fromARGB(255, 163, 234, 200),
                                 borderRadius: BorderRadius.circular(25),
                               ),
                               child: Center(

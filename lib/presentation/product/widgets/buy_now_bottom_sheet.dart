@@ -106,7 +106,7 @@ class BuyNowBottomSheetState extends State<BuyNowBottomSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    "${widget.product.model ?? '-'} ${widget.product.type ?? '-'}",
+                                    "${widget.product.brand ?? '-'} ${widget.product.model ?? '-'}",
                                     style: poppinsRegular.copyWith(
                                         fontSize: Dimensions.fontSizeLarge),
                                     maxLines: 2,
