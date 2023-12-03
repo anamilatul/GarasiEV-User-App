@@ -64,12 +64,35 @@ class CartPageState extends State<CartPage> {
                         builder: (context, state) {
                           return state.maybeWhen(orElse: () {
                             return const Center(
-                              child: Text("There is no data in the cart"),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.remove_shopping_cart_outlined),
+                                  Text("No product available in the cart"),
+                                ],
+                              ),
                             );
                           }, loaded: (product) {
                             if (product.isEmpty) {
                               return const Center(
-                                child: Text("There is no data in the cart"),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.remove_shopping_cart_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      "No product available in the cart",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             }
                             return ListView.builder(

@@ -264,7 +264,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                "${listProduct.product.model} ${listProduct.product.type}",
+                                                "${listProduct.product.brand} ${listProduct.product.model}",
                                                 style: poppinsRegular.copyWith(
                                                   fontSize:
                                                       Dimensions.fontSizeLarge,
@@ -304,6 +304,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             );
                           },
                         ),
+                        Divider(
+                          thickness: 2,
+                          color: Colors.grey[300],
+                        ),
                         Container(
                           height: 35,
                           width: MediaQuery.of(context).size.width,
@@ -330,9 +334,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                              top: Dimensions.paddingSizeSmall),
-                          color: Theme.of(context).highlightColor,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_garasi_ev/presentation/home/widgets/card_item.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
 import 'package:flutter_garasi_ev/utils/costum_themes.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
 import '../../../bloc/product/product_bloc.dart';
 import '../../../data/models/product_response_model.dart';
 import '../../../utils/dimensions.dart';
-import 'product_item.dart';
 
 class SearchBrand extends StatefulWidget {
   const SearchBrand({Key? key}) : super(key: key);
@@ -26,13 +25,15 @@ class _SearchBrandState extends State<SearchBrand> {
 
     searchResults = products.where((product) {
       final productBrand = product.brand!.toLowerCase();
-      return productBrand.contains(brand);
+      final productModel = product.model!.toLowerCase();
+
+      return productBrand.contains(brand) || productModel.contains(brand);
     }).toList();
 
     if (searchResults.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Tidak ada produk dengan merek "$brand".'),
+          content: Text('Nothing product "$brand".'),
         ),
       );
     }
@@ -142,7 +143,7 @@ class _SearchBrandState extends State<SearchBrand> {
                   itemCount: searchResults.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return ProductItem(product: searchResults[index]);
+                    return CardItem(product: searchResults[index]);
                   },
                 ),
               ],

@@ -6,6 +6,7 @@ import '../../bloc/product/product_bloc.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
+import '../home/widgets/card_item.dart';
 import '../home/widgets/product_item.dart';
 
 class AllProductPage extends StatefulWidget {
@@ -64,15 +65,14 @@ class _AllProductPageState extends State<AllProductPage> {
                 loaded: (model) {
                   return Expanded(
                     child: StaggeredGridView.countBuilder(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.paddingSizeSmall),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       physics: const BouncingScrollPhysics(),
                       crossAxisCount: 2,
                       mainAxisSpacing: 6,
-                      crossAxisSpacing: 8,
+                      crossAxisSpacing: 6,
                       itemCount: model.data!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ProductItem(product: model.data![index]);
+                        return CardItem(product: model.data![index]);
                       },
                       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
                     ),

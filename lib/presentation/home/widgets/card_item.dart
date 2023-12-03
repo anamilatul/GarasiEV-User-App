@@ -9,9 +9,9 @@ import '../../../utils/images.dart';
 import '../../custom_widgets/rating_bar.dart';
 import '../../product/detail_product.dart';
 
-class ProductItem extends StatelessWidget {
+class CardItem extends StatelessWidget {
   final Product product;
-  const ProductItem({
+  const CardItem({
     Key? key,
     required this.product,
   }) : super(key: key);
@@ -50,7 +50,7 @@ class ProductItem extends StatelessWidget {
         );
       },
       child: Container(
-        height: Dimensions.cardHeight,
+        height: 210,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

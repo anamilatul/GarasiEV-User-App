@@ -54,7 +54,7 @@ class _MyOrderPageState extends State<MyOrderPage>
             Tab(text: 'Processed'),
             Tab(text: 'Finished'),
           ],
-          labelStyle: poppinsRegularLarge,
+          labelStyle: poppinsRegular,
           unselectedLabelStyle: poppinsRegular,
           indicatorColor: Colors.white,
           labelColor: Colors.white,

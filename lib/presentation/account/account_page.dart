@@ -37,6 +37,7 @@ class _AccountPageState extends State<AccountPage> {
         title: Text(
           'Profile',
         ),
+        automaticallyImplyLeading: false,
         actions: [
           BlocConsumer<LogoutBloc, LogoutState>(
             listener: (context, state) {
@@ -139,7 +140,7 @@ class _AccountPageState extends State<AccountPage> {
                             child: Column(
                               children: [
                                 ListTile(
-                                  title: Text("Nama"),
+                                  title: Text("Name"),
                                   subtitle: Text("-"),
                                 ),
                                 Divider(
@@ -178,7 +179,7 @@ class _AccountPageState extends State<AccountPage> {
                           child: Column(
                             children: [
                               ListTile(
-                                title: Text("Nama"),
+                                title: Text("Name"),
                                 subtitle: LinearProgressIndicator(),
                               ),
                               Divider(
@@ -253,7 +254,7 @@ class _AccountPageState extends State<AccountPage> {
                             child: Column(
                               children: [
                                 ListTile(
-                                  title: Text("Nama"),
+                                  title: Text("Name"),
                                   subtitle: Text(profile.name),
                                 ),
                                 Divider(
@@ -453,13 +454,13 @@ class _AccountPageState extends State<AccountPage> {
                                                                               phone: phone,
                                                                               bio: bio),
                                                                         ));
+                                                                    Navigator.pop(
+                                                                        context);
                                                                     context
                                                                         .read<
                                                                             ProfileBloc>()
                                                                         .add(const ProfileEvent
                                                                             .getProfile());
-                                                                    Navigator.pop(
-                                                                        context);
                                                                   }
                                                                 },
                                                                 child: Text(

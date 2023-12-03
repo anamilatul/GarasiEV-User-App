@@ -173,6 +173,11 @@ class _LoginPageState extends State<LoginPage> {
                                           builder: (context) =>
                                               const MainPage()),
                                       (route) => false);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Login Successfully"),
+                                    backgroundColor: Colors.red,
+                                  ));
                                 },
                                 error: (message) {
                                   ScaffoldMessenger.of(context)

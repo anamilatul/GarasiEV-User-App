@@ -41,11 +41,11 @@ class _CartWidgetState extends State<CartWidget> {
         //     ));
       },
       child: Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-        decoration: BoxDecoration(
-          color: Theme.of(context).highlightColor,
-        ),
+        padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.paddingSizeSmall, vertical: 2),
+        // decoration: BoxDecoration(
+        //   color: Theme.of(context).highlightColor,
+        // ),
         child: Column(
           children: [
             Row(
@@ -56,9 +56,7 @@ class _CartWidgetState extends State<CartWidget> {
                   decoration: BoxDecoration(
                     borderRadius:
                         BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
-                    border: Border.all(
-                        color: Theme.of(context).primaryColor.withOpacity(.20),
-                        width: 1),
+                    border: Border.all(color: ColorResources.grey, width: 1),
                   ),
                   child: ClipRRect(
                     borderRadius:
@@ -66,13 +64,13 @@ class _CartWidgetState extends State<CartWidget> {
                     child: FadeInImage.assetNetwork(
                       placeholder: Images.placeholder,
                       height: 100,
-                      // width: 60,
+                      width: 100,
                       image: widget.productQuantity.product.imageProduct!,
                       imageErrorBuilder: (c, o, s) => Image.asset(
                         Images.placeholder,
                         fit: BoxFit.cover,
                         height: 100,
-                        // width: 60,
+                        width: MediaQuery.sizeOf(context).width,
                       ),
                     ),
                   ),
@@ -88,7 +86,7 @@ class _CartWidgetState extends State<CartWidget> {
                           children: [
                             Expanded(
                               child: Text(
-                                "${widget.productQuantity.product.model} ${widget.productQuantity.product.type} ",
+                                "${widget.productQuantity.product.brand} ${widget.productQuantity.product.model} ",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: poppinsBold.copyWith(
@@ -142,7 +140,7 @@ class _CartWidgetState extends State<CartWidget> {
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16),
                                               child: Text(
-                                                'Do you want to remove "${widget.productQuantity.product.model} ${widget.productQuantity.product.type}" ?',
+                                                'Do you want to remove "${widget.productQuantity.product.brand} ${widget.productQuantity.product.model}" ?',
                                                 style: poppinsRegularLarge,
                                               ),
                                             ),
@@ -165,9 +163,6 @@ class _CartWidgetState extends State<CartWidget> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(50),
-                                                        side: const BorderSide(
-                                                            color: ColorResources
-                                                                .primaryMaterial),
                                                       ),
                                                     ),
                                                     child: Text(
@@ -263,7 +258,7 @@ class _CartWidgetState extends State<CartWidget> {
             ),
             Divider(
               thickness: 2,
-              color: Colors.grey,
+              color: Colors.grey[300],
             ),
           ],
         ),

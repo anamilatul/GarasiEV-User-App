@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_garasi_ev/presentation/cart/cart_page.dart';
 import 'package:flutter_garasi_ev/presentation/checkout/checkout_page.dart';
 import 'package:flutter_garasi_ev/utils/price_format.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -309,7 +310,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                             );
                         CustomSnackbar.showSnackbar(
                           context,
-                          "'${widget.product.model ?? '-'} ${widget.product.type ?? '-'}' successfully add to basket",
+                          "'${widget.product.brand ?? '-'} ${widget.product.model ?? '-'}' successfully add to cart",
                           actionText: '',
                           onPressed: () {
                             // Navigator.push(
@@ -320,7 +321,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                             //                 const HomeScreen()));
                           },
                         );
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CartPage()));
                       },
                     ),
                   ),

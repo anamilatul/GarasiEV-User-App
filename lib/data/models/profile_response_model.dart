@@ -4,13 +4,13 @@ class ProfileResponseModel {
   final int id;
   final String name;
   final String email;
-  final dynamic phone;
-  final dynamic bio;
+  final String? phone;
+  final String? bio;
   final String role;
-  final dynamic emailVerifiedAt;
-  final dynamic twoFactorSecret;
-  final dynamic twoFactorRecoveryCodes;
-  final dynamic twoFactorConfirmedAt;
+  final String? emailVerifiedAt;
+  final String? twoFactorSecret;
+  final String? twoFactorRecoveryCodes;
+  final String? twoFactorConfirmedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
 
