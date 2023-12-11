@@ -28,4 +28,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     });
   }
+  List<Product> _products = [];
+  Product? findProductById(String id) {
+    // Find product in the list by ID
+    try {
+      return _products.firstWhere((product) => product.id == id);
+    } catch (e) {
+      return null; // Return null if the product is not found
+    }
+  }
 }

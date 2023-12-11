@@ -15,7 +15,7 @@ import '../cart/cart_page.dart';
 import 'widgets/banner.dart';
 import 'widgets/category_item.dart';
 import 'widgets/product_item.dart';
-import 'widgets/search_brand.dart';
+import '../search/search_brand.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

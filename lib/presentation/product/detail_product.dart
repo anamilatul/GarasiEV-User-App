@@ -190,7 +190,7 @@ class _DetailProductState extends State<DetailProduct> {
                                             child: Container(
                                               padding: EdgeInsets.all(8.0),
                                               child: Text(
-                                                  '${widget.product.wheelSize}'),
+                                                  '${widget.product.wheelSize} inch'),
                                             ),
                                           ),
                                         ],
@@ -280,7 +280,7 @@ class _DetailProductState extends State<DetailProduct> {
                                             child: Container(
                                               padding: EdgeInsets.all(8.0),
                                               child: Text(
-                                                  '${widget.product.weight} W'),
+                                                  '${widget.product.weight} kg'),
                                             ),
                                           ),
                                         ],

@@ -4,9 +4,9 @@ import 'package:flutter_garasi_ev/presentation/home/widgets/card_item.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
 import 'package:flutter_garasi_ev/utils/costum_themes.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../../../bloc/product/product_bloc.dart';
-import '../../../data/models/product_response_model.dart';
-import '../../../utils/dimensions.dart';
+import '../../bloc/product/product_bloc.dart';
+import '../../data/models/product_response_model.dart';
+import '../../utils/dimensions.dart';
 
 class SearchBrand extends StatefulWidget {
   const SearchBrand({Key? key}) : super(key: key);

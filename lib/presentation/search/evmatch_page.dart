@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_garasi_ev/presentation/custom_widgets/button/custom_button.dart';
+import 'package:flutter_garasi_ev/presentation/scan/scan_page.dart';
 import 'package:flutter_garasi_ev/utils/color_resources.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -10,16 +11,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
 import '../custom_widgets/text_field/custom_textfield.dart';
+import '../home/widgets/card_item.dart';
 import '../home/widgets/product_item.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+//EVMatch
+class EVMatchPage extends StatefulWidget {
+  const EVMatchPage({super.key});
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _EVMatchPageState createState() => _EVMatchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _EVMatchPageState extends State<EVMatchPage> {
   TextEditingController weightController = TextEditingController();
   TextEditingController rangeController = TextEditingController();
   TextEditingController speedController = TextEditingController();
@@ -45,7 +48,10 @@ class _SearchPageState extends State<SearchPage> {
     if (searchResults.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Tidak ada produk yang sesuai dengan kriteria.'),
+          content: Text(
+            'There are no products that match the criteria.',
+            style: poppinsRegular,
+          ),
         ),
       );
     }
@@ -86,9 +92,9 @@ class _SearchPageState extends State<SearchPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, left: 16),
                     child: Text(
-                      'SmartMatch',
-                      style: poppinsRegular.copyWith(
-                          fontSize: 20, color: ColorResources.primaryMaterial),
+                      'EV-Match',
+                      style: poppinsRegularLarge.copyWith(
+                          color: ColorResources.primaryMaterial),
                     ),
                   ),
                   // SizedBox(
@@ -114,7 +120,7 @@ class _SearchPageState extends State<SearchPage> {
                         child: Column(
                           children: [
                             CustomTextField(
-                              hintText: 'Berat Badan Driver (kg)',
+                              hintText: 'Weight Driver (kg)',
                               focusNode: _weightNode,
                               nextNode: _rangeNode,
                               textInputType: TextInputType.number,
@@ -124,7 +130,7 @@ class _SearchPageState extends State<SearchPage> {
                               height: 5,
                             ),
                             CustomTextField(
-                              hintText: 'Jarak',
+                              hintText: 'Range (km)',
                               focusNode: _rangeNode,
                               nextNode: _speedeNode,
                               textInputType: TextInputType.number,
@@ -134,7 +140,7 @@ class _SearchPageState extends State<SearchPage> {
                               height: 5,
                             ),
                             CustomTextField(
-                              hintText: 'Kecepatan',
+                              hintText: 'Speed (km/h)',
                               focusNode: _speedeNode,
                               textInputType: TextInputType.number,
                               controller: speedController,
@@ -166,87 +172,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, left: 16),
                       child: Text(
-                        'SmartMatch',
-                        style: poppinsRegular.copyWith(
-                            fontSize: 20,
-                            color: ColorResources.primaryMaterial),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 8,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ColorResources.homeBg,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              CustomTextField(
-                                hintText: 'Wweight Driver (kg)',
-                                focusNode: _weightNode,
-                                nextNode: _rangeNode,
-                                textInputType: TextInputType.number,
-                                controller: weightController,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              CustomTextField(
-                                hintText: 'Range',
-                                focusNode: _rangeNode,
-                                nextNode: _speedeNode,
-                                textInputType: TextInputType.number,
-                                controller: rangeController,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              CustomTextField(
-                                hintText: 'Speed',
-                                focusNode: _speedeNode,
-                                textInputType: TextInputType.number,
-                                controller: speedController,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              CustomButton(
-                                  onTap: () {
-                                    // performSearch(products);
-                                  },
-                                  buttonText: "Find"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            loaded: (model) {
-              final products = model.data ?? [];
-              return SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, left: 16),
-                      child: Text(
-                        'SmartMatch',
+                        'EV-Match',
                         style: poppinsRegular.copyWith(
                             fontSize: 20,
                             color: ColorResources.primaryMaterial),
@@ -285,7 +211,7 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 5,
                               ),
                               CustomTextField(
-                                hintText: 'Range',
+                                hintText: 'Range (km)',
                                 focusNode: _rangeNode,
                                 nextNode: _speedeNode,
                                 textInputType: TextInputType.number,
@@ -295,7 +221,87 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 5,
                               ),
                               CustomTextField(
-                                hintText: 'Speed',
+                                hintText: 'Speed (km/h)',
+                                focusNode: _speedeNode,
+                                textInputType: TextInputType.number,
+                                controller: speedController,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomButton(
+                                  onTap: () {
+                                    // performSearch(products);
+                                  },
+                                  buttonText: "Find"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            loaded: (model) {
+              final products = model.data ?? [];
+              return SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 16),
+                      child: Text(
+                        'EV-Match',
+                        style: poppinsRegular.copyWith(
+                            fontSize: 20,
+                            color: ColorResources.primaryMaterial),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   height: 8,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorResources.homeBg,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              CustomTextField(
+                                hintText: 'Weight Driver (kg)',
+                                focusNode: _weightNode,
+                                nextNode: _rangeNode,
+                                textInputType: TextInputType.number,
+                                controller: weightController,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CustomTextField(
+                                hintText: 'Range (km)',
+                                focusNode: _rangeNode,
+                                nextNode: _speedeNode,
+                                textInputType: TextInputType.number,
+                                controller: rangeController,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CustomTextField(
+                                hintText: 'Speed (km/h)',
                                 focusNode: _speedeNode,
                                 textInputType: TextInputType.number,
                                 controller: speedController,
@@ -364,12 +370,12 @@ class _SearchPageState extends State<SearchPage> {
                                   physics: const BouncingScrollPhysics(),
                                   crossAxisCount: 2,
                                   mainAxisSpacing: 6,
-                                  crossAxisSpacing: 8,
+                                  crossAxisSpacing: 6,
                                   itemCount: searchResults.length,
                                   shrinkWrap: true,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return ProductItem(
+                                    return CardItem(
                                         product: searchResults[index]);
                                   },
                                 ),
@@ -391,8 +397,8 @@ class _SearchPageState extends State<SearchPage> {
       // floatingActionButton: FloatingActionButton(
       //   backgroundColor: ColorResources.primaryMaterial,
       //   onPressed: () {
-      //     // Navigator.push(context,
-      //     //     MaterialPageRoute(builder: (context) => const ScanScreen()));
+      //     Navigator.push(context,
+      //         MaterialPageRoute(builder: (context) => const ScanPage()));
       //   },
       //   child: const Icon(
       //     Icons.qr_code_scanner,

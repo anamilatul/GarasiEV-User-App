@@ -24,7 +24,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
-    // context.read<ProfileBloc>().add(const ProfileEvent.getProfile());
+    context.read<ProfileBloc>().add(const ProfileEvent.getProfile());
     super.initState();
   }
 

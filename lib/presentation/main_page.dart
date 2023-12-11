@@ -8,7 +8,7 @@ import 'package:flutter_garasi_ev/utils/color_resources.dart';
 import '../data/datasources/auth_local_datasource.dart';
 import 'auth/login_page.dart';
 import 'home/home_page.dart';
-import 'search/search_page.dart';
+import 'search/evmatch_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -22,7 +22,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    SearchPage(),
+    EVMatchPage(),
     MyOrderPage(),
     AccountPage(),
   ];
@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(
               Icons.electric_scooter,
             ),
-            label: 'SmartMatch',
+            label: 'EV-Match',
           ),
           BottomNavigationBarItem(
             icon: Icon(

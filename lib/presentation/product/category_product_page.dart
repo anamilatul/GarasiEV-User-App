@@ -5,6 +5,7 @@ import '../../bloc/product/product_bloc.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/costum_themes.dart';
 import '../../utils/dimensions.dart';
+import '../home/widgets/card_item.dart';
 import '../home/widgets/product_item.dart';
 
 class CategoryProductsPage extends StatefulWidget {
@@ -80,7 +81,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                       itemCount: model.data!.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        return ProductItem(product: model.data![index]);
+                        return CardItem(product: model.data![index]);
                       },
                     ),
                   );
