@@ -19,7 +19,7 @@ class _PaymentFailedPageState extends State<PaymentFailedPage> {
         dialogType: DialogType.error,
         animType: AnimType.rightSlide,
         title: 'Payment Failed',
-        desc: 'Maaf Pembayaran Anda gagal',
+        desc: 'Sorry, your payment failed',
         btnOkOnPress: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const MainPage();

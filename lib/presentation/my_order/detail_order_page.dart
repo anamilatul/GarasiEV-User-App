@@ -34,7 +34,7 @@ class DetailOrderPage extends StatelessWidget {
             ),
             Text(
               'Detail Order',
-              style: poppinsRegular.copyWith(fontSize: 20, color: Colors.black),
+              style: poppinsRegularLarge.copyWith(color: Colors.black),
             ),
           ],
         ),
@@ -63,15 +63,15 @@ class DetailOrderPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Detail Order",
-                    style: poppinsBold.copyWith(
-                        fontSize: Dimensions.fontSizeExtraLarge,
-                        color: ColorResources.red),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  // Text(
+                  //   "Detail Order",
+                  //   style: poppinsRegular.copyWith(
+                  //       fontSize: Dimensions.fontSizeExtraLarge,
+                  //       color: ColorResources.red),
+                  // ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
                   Text(
                     'Shipping Address',
                     style: poppinsBold.copyWith(
@@ -81,7 +81,7 @@ class DetailOrderPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
                       "${order.deliveryAddress}",
-                      maxLines: 1,
+                      // maxLines: 1,
                       style: poppinsRegular.copyWith(
                           fontSize: Dimensions.fontSizeDefault),
                     ),
@@ -135,12 +135,12 @@ class DetailOrderPage extends StatelessWidget {
                       Text(
                         "Total",
                         style: poppinsBold.copyWith(
-                            fontSize: Dimensions.fontSizeExtraLarge),
+                            fontSize: Dimensions.fontSizeLarge),
                       ),
                       Text(
                         '${order.totalPrice}'.priceFormat(),
                         style: poppinsBold.copyWith(
-                            fontSize: Dimensions.fontSizeExtraLarge),
+                            fontSize: Dimensions.fontSizeLarge),
                       ),
                     ],
                   ),
