@@ -124,11 +124,17 @@ class _SearchBrandState extends State<SearchBrand> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.no_backpack_outlined),
+                  Icon(
+                    Icons.no_backpack_outlined,
+                    color: Colors.grey,
+                  ),
                   SizedBox(
                     height: 5,
                   ),
-                  Text('Nothing product to show'),
+                  Text(
+                    'Nothing product to show',
+                    style: poppinsRegular.copyWith(color: Colors.grey),
+                  ),
                 ],
               ),
             )

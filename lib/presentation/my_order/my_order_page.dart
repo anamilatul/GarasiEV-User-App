@@ -128,8 +128,28 @@ class _MyOrderPageState extends State<MyOrderPage>
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => DetailOrderPage(order: order),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return DetailOrderPage(order: order);
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = 0.0;
+                    const end = 1.0;
+                    const curve = Curves.easeInOut;
+
+                    var tween = Tween(begin: begin, end: end).chain(
+                      CurveTween(curve: curve),
+                    );
+
+                    var scaleAnimation = animation.drive(tween);
+
+                    return ScaleTransition(
+                      scale: scaleAnimation,
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 500),
                 ),
               );
             },
@@ -165,8 +185,28 @@ class _MyOrderPageState extends State<MyOrderPage>
               // Navigasi ke halaman detail pesanan
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => DetailOrderPage(order: order),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return DetailOrderPage(order: order);
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = 0.0;
+                    const end = 1.0;
+                    const curve = Curves.easeInOut;
+
+                    var tween = Tween(begin: begin, end: end).chain(
+                      CurveTween(curve: curve),
+                    );
+
+                    var scaleAnimation = animation.drive(tween);
+
+                    return ScaleTransition(
+                      scale: scaleAnimation,
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 500),
                 ),
               );
             },

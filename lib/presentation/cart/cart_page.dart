@@ -203,10 +203,32 @@ class CartPageState extends State<CartPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const CheckoutPage();
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                        secondaryAnimation) {
+                                      return CheckoutPage();
                                     },
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeInOut;
+
+                                      var tween =
+                                          Tween(begin: begin, end: end).chain(
+                                        CurveTween(curve: curve),
+                                      );
+
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                    transitionDuration:
+                                        const Duration(milliseconds: 1000),
                                   ),
                                 );
                               },

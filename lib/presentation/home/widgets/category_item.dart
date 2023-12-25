@@ -28,11 +28,31 @@ class _CategoryItemState extends State<CategoryItem> {
         });
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => CategoryProductsPage(
-              id: widget.category.id!,
-              name: widget.category.name!,
-            ),
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return CategoryProductsPage(
+                id: widget.category.id!,
+                name: widget.category.name!,
+              );
+            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = 0.0;
+              const end = 1.0;
+              const curve = Curves.easeInOut;
+
+              var tween = Tween(begin: begin, end: end).chain(
+                CurveTween(curve: curve),
+              );
+
+              var scaleAnimation = animation.drive(tween);
+
+              return ScaleTransition(
+                scale: scaleAnimation,
+                child: child,
+              );
+            },
+            transitionDuration: const Duration(milliseconds: 500),
           ),
         );
       },

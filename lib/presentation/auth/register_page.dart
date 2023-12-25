@@ -54,6 +54,13 @@ class _RegisterPageState extends State<RegisterPage> {
             backgroundColor: Colors.red,
           ),
         );
+      } else if (email.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Email Can't be Empty"),
+            backgroundColor: Colors.red,
+          ),
+        );
       } else if (!email.contains('@')) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -184,11 +191,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(
-                        left: Dimensions.marginSizeLarge,
-                        right: Dimensions.marginSizeLarge,
-                        bottom: Dimensions.marginSizeLarge,
-                        top: Dimensions.marginSizeLarge),
+                    margin: const EdgeInsets.all(
+                      Dimensions.marginSizeLarge,
+                    ),
                     child: BlocListener<RegisterBloc, RegisterState>(
                       listener: (context, state) {
                         state.maybeWhen(
@@ -201,10 +206,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                             loaded: (data) async {
                               await AuthLocalDataSource().saveAuth(data);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Register Successfully"),
+                                backgroundColor: Colors.green,
+                              ));
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const MainPage()),
+                                      builder: (context) => LoginPage()),
                                   (route) => false);
                             });
                       },

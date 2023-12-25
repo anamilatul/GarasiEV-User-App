@@ -78,9 +78,12 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                   );
                 },
-                loading: () => const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
+                loading: () => Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               );
