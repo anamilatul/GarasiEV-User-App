@@ -377,13 +377,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
             orElse: () {
               return InkWell(
                 onTap: () {
-                  final requestModel = OrderRequestModel(
+                  // final requestModel = OrderRequestModel(
+                  //     items: items,
+                  //     totalPrice: totalPrice,
+                  //     deliveryAddress: _shoppingAddress.text,
+                  //     sellerId: 1);
+                  // context.read<OrderBloc>().add(OrderEvent.order(requestModel));
+                  // context.read<CheckoutBloc>().add(const CheckoutEvent.clear());
+
+                  if (_shoppingAddress.text.isEmpty) {
+                    // Show a SnackBar indicating that the address must be filled
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Please fill in the address.'),
+                        backgroundColor:
+                            Colors.red, // You can customize the color
+                      ),
+                    );
+                  } else {
+                    // The address is not empty, proceed with making an order
+                    final requestModel = OrderRequestModel(
                       items: items,
                       totalPrice: totalPrice,
                       deliveryAddress: _shoppingAddress.text,
-                      sellerId: 3);
-                  context.read<OrderBloc>().add(OrderEvent.order(requestModel));
-                  context.read<CheckoutBloc>().add(const CheckoutEvent.clear());
+                      sellerId: 3,
+                    );
+                    context
+                        .read<OrderBloc>()
+                        .add(OrderEvent.order(requestModel));
+                    context
+                        .read<CheckoutBloc>()
+                        .add(const CheckoutEvent.clear());
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(
